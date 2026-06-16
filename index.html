@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказ чехлов для авто</title>
+    <style>
+        /* Стили для формы */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f7fc;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: #fff;
+            padding: 30px 35px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-weight: 500;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #34495e;
+            font-size: 14px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #dce1e8;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: 0.2s;
+            background: #fafbfc;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #3498db;
+            outline: none;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(52,152,219,0.15);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .row .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        .file-upload {
+            border: 2px dashed #bdc3c7;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            background: #fafbfc;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .file-upload:hover {
+            border-color: #3498db;
+            background: #f0f7fe;
+        }
+        .file-upload input[type="file"] {
+            display: none;
+        }
+        .file-upload label {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #3498db;
+            color: #fff;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .file-upload label:hover {
+            background: #2980b9;
+        }
+        .file-upload .file-name {
+            margin-top: 10px;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            letter-spacing: 1px;
+        }
+        .btn:hover {
+            background: #27ae60;
+            transform: scale(1.01);
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        .response-area {
+            margin-top: 20px;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 8px;
+            display: none;
+            word-wrap: break-word;
+        }
+        .response-area.error {
+            background: #fde0e0;
+            color: #c0392b;
+        }
+        .response-area.success {
+            background: #d5f5e3;
+            color: #1e8449;
+        }
+        .small-note {
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Заказ чехлов для авто</h1>
+
+        <form id="orderForm">
+            <!-- Контактные данные -->
+            <div class="row">
+                <div class="form-group">
+                    <label for="name">Имя *</label>
+                    <input type="text" id="name" required placeholder="Иван">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Телефон *</label>
+                    <input type="tel" id="phone" required placeholder="+7 900 123-45-67">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="city">Город</label>
+                    <input type="text" id="city" placeholder="Москва">
+                </div>
+                <div class="form-group">
+                    <label for="address">Адрес</label>
+                    <input type="text" id="address" placeholder="Ул. Ленина, д.1, кв.5">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="comment">Комментарий</label>
+                <textarea id="comment" placeholder="Дополнительные пожелания..."></textarea>
+            </div>
+
+            <!-- Параметры чехлов -->
+            <div class="row">
+                <div class="form-group">
+                    <label for="carBrand">Марка авто *</label>
+                    <input type="text" id="carBrand" required placeholder="Toyota">
+                </div>
+                <div class="form-group">
+                    <label for="carModel">Модель *</label>
+                    <input type="text" id="carModel" required placeholder="Camry">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="coverColor">Цвет чехлов</label>
+                    <input type="text" id="coverColor" placeholder="Чёрный, бежевый...">
+                </div>
+                <div class="form-group">
+                    <label for="stitchColor">Цвет строчки</label>
+                    <input type="text" id="stitchColor" placeholder="Красный, белый...">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pattern">Рисунок</label>
+                <input type="text" id="pattern" placeholder="Клетка, ромб, однотонный...">
+            </div>
+
+            <!-- Доставка и оплата -->
+            <div class="row">
+                <div class="form-group">
+                    <label for="deliveryDate">Дата доставки</label>
+                    <input type="date" id="deliveryDate">
+                </div>
+                <div class="form-group">
+                    <label for="deliverySlot">Временной слот</label>
+                    <input type="text" id="deliverySlot" placeholder="09:00 - 13:00">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="paymentMethod">Способ оплаты</label>
+                <select id="paymentMethod">
+                    <option value="Наличные">Наличные</option>
+                    <option value="Карта">Банковская карта</option>
+                    <option value="Перевод" selected>Перевод</option>
+                    <option value="Онлайн">Онлайн-оплата</option>
+                </select>
+            </div>
+
+            <!-- Загрузка фото -->
+            <div class="form-group">
+                <label>Фото образца (необязательно)</label>
+                <div class="file-upload" id="fileDropZone">
+                    <input type="file" id="photoInput" accept="image/*">
+                    <label for="photoInput">Выбрать файл</label>
+                    <div class="file-name" id="fileName">Файл не выбран</div>
+                </div>
+                <div class="small-note">Вы можете приложить фото желаемого чехла</div>
+            </div>
+
+            <button type="submit" class="btn">Создать заказ</button>
+        </form>
+
+        <div id="responseArea" class="response-area"></div>
+    </div>
+
+    <script>
+        (function() {
+            // ========== НАСТРОЙКА ==========
+            // Укажите URL вашего вебхука (куда будет отправлен JSON)
+            const webhookUrl = 'https://hooks.tglk.ru/in/mX1dBAMnmXrazeSbrMFvAkVOaQZNW4'; 
+            // =================================
+
+            const form = document.getElementById('orderForm');
+            const responseArea = document.getElementById('responseArea');
+            const fileInput = document.getElementById('photoInput');
+            const fileNameDisplay = document.getElementById('fileName');
+
+            // Показываем имя выбранного файла
+            fileInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    fileNameDisplay.textContent = this.files[0].name;
+                } else {
+                    fileNameDisplay.textContent = 'Файл не выбран';
+                }
+            });
+
+            // Извлекаем параметры из URL
+            function getUrlParams() {
+                const params = new URLSearchParams(window.location.search);
+                return {
+                    dealId: params.get('deal_id') || null,
+                    companyId: params.get('company_id') || null,
+                    page: params.get('page') || null,
+                };
+            }
+
+            // Генерация простого ID (для примера)
+            function generateId() {
+                return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            }
+
+            // Форматирование даты в ISO
+            function nowISO() {
+                return new Date().toISOString();
+            }
+
+            // Чтение файла как base64
+            function readFileAsBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result); // результат содержит data:image/...;base64,...
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            // Обработка отправки формы
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // Собираем данные формы
+                const name = document.getElementById('name').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const city = document.getElementById('city').value.trim();
+                const address = document.getElementById('address').value.trim();
+                const comment = document.getElementById('comment').value.trim();
+                const carBrand = document.getElementById('carBrand').value.trim();
+                const carModel = document.getElementById('carModel').value.trim();
+                const coverColor = document.getElementById('coverColor').value.trim();
+                const stitchColor = document.getElementById('stitchColor').value.trim();
+                const pattern = document.getElementById('pattern').value.trim();
+                const deliveryDate = document.getElementById('deliveryDate').value;
+                const deliverySlot = document.getElementById('deliverySlot').value.trim();
+                const paymentMethod = document.getElementById('paymentMethod').value;
+
+                // Проверка обязательных полей
+                if (!name || !phone || !carBrand || !carModel) {
+                    showResponse('Пожалуйста, заполните обязательные поля (Имя, Телефон, Марка, Модель).', 'error');
+                    return;
+                }
+
+                // Получаем параметры из URL
+                const { dealId, companyId, page } = getUrlParams();
+
+                // Получаем файл, если выбран
+                let photoBase64 = null;
+                let photoName = null;
+                if (fileInput.files && fileInput.files[0]) {
+                    try {
+                        photoBase64 = await readFileAsBase64(fileInput.files[0]);
+                        photoName = fileInput.files[0].name;
+                    } catch (err) {
+                        showResponse('Ошибка при чтении файла: ' + err.message, 'error');
+                        return;
+                    }
+                }
+
+                // Формируем структуру заказа
+                const orderId = generateId();
+                const orderNumber = 'GM-' + Date.now().toString().slice(-8);
+                const now = nowISO();
+                const price = 5000; // примерная цена, можно добавить поле в форму
+                const subtotal = price;
+                const total = price;
+
+                // Создаём элемент товара
+                const item = {
+                    productId: 'cover-001',
+                    name: `Чехлы для ${carBrand} ${carModel}`,
+                    packLabel: 'комплект (перед/зад)',
+                    price: price,
+                    quantity: 1,
+                    imageUrl: photoBase64 || null, // если фото есть – base64
+                };
+
+                // Формируем JSON по образцу
+                const payload = {
+                    event: 'order.created',
+                    sentAt: now,
+                    order: {
+                        id: orderId,
+                        orderNumber: orderNumber,
+                        status: 'created',
+                        createdAt: now,
+                        city: city || '',
+                        name: name,
+                        phone: phone,
+                        recipientPhone: phone,
+                        address: address || '',
+                        district: '',
+                        intercom: '',
+                        comment: comment || '',
+                        deliveryDate: deliveryDate || '',
+                        deliverySlot: deliverySlot || '',
+                        paymentMethod: paymentMethod,
+                        items: [item],
+                        subtotal: subtotal,
+                        deliveryCost: 0,
+                        spentPoints: 0,
+                        total: total,
+                        // Дополнительные поля для чехлов
+                        carBrand: carBrand,
+                        carModel: carModel,
+                        coverColor: coverColor || '',
+                        stitchColor: stitchColor || '',
+                        pattern: pattern || '',
+                        photoName: photoName || null,
+                    },
+                    customer: {
+                        id: 'customer-' + generateId(),
+                        phone: phone,
+                        name: name,
+                        pointsBalance: 0,
+                        phoneVerifiedAt: null,
+                        createdAt: now,
+                        referredBy: null,
+                        regUtm: null,
+                    },
+                    attribution: {
+                        orderUtm: null,
+                        cookies: {
+                            granat_city: city || '',
+                            granat_cookie_consent: '1'
+                        }
+                    },
+                    // Передаём параметры из URL
+                    dealId: dealId,
+                    companyId: companyId,
+                    page: page,
+                };
+
+                // Отправка вебхука
+                try {
+                    const response = await fetch(webhookUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(payload),
+                    });
+
+                    let resultText;
+                    try {
+                        const resultJson = await response.json();
+                        resultText = JSON.stringify(resultJson, null, 2);
+                    } catch {
+                        resultText = await response.text();
+                    }
+
+                    if (response.ok) {
+                        showResponse(`✅ Заказ успешно создан!\nОтвет сервера:\n${resultText}`, 'success');
+                    } else {
+                        showResponse(`❌ Ошибка отправки (${response.status}):\n${resultText}`, 'error');
+                    }
+                } catch (err) {
+                    showResponse(`❌ Сетевая ошибка: ${err.message}`, 'error');
+                }
+            });
+
+            // Функция отображения ответа
+            function showResponse(message, type) {
+                responseArea.style.display = 'block';
+                responseArea.textContent = message;
+                responseArea.className = 'response-area ' + (type || '');
+            }
+
+            // Показываем параметры из URL в консоли для отладки (можно убрать)
+            console.log('Параметры URL:', getUrlParams());
+        })();
+    </script>
+</body>
+</html>
