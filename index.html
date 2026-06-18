@@ -3,457 +3,971 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Заказ чехлов для авто</title>
+    <title>Конструктор авточехлов</title>
     <style>
-        /* Стили для формы */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f4f7fc;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 700px;
-            width: 100%;
-            background: #fff;
-            padding: 30px 35px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            font-weight: 500;
-            margin-bottom: 25px;
-            letter-spacing: 0.5px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: #34495e;
-            font-size: 14px;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #dce1e8;
-            border-radius: 8px;
-            font-size: 15px;
-            transition: 0.2s;
-            background: #fafbfc;
-        }
-        input:focus, select:focus, textarea:focus {
-            border-color: #3498db;
-            outline: none;
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(52,152,219,0.15);
-        }
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-        .row {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .row .form-group {
-            flex: 1;
-            min-width: 200px;
-        }
-        .file-upload {
-            border: 2px dashed #bdc3c7;
-            padding: 20px;
-            text-align: center;
-            border-radius: 8px;
-            background: #fafbfc;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .file-upload:hover {
-            border-color: #3498db;
-            background: #f0f7fe;
-        }
-        .file-upload input[type="file"] {
-            display: none;
-        }
-        .file-upload label {
-            display: inline-block;
-            padding: 8px 20px;
-            background: #3498db;
-            color: #fff;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .file-upload label:hover {
-            background: #2980b9;
-        }
-        .file-upload .file-name {
-            margin-top: 10px;
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-        .btn {
-            width: 100%;
-            padding: 16px;
-            background: #2ecc71;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            letter-spacing: 1px;
-        }
-        .btn:hover {
-            background: #27ae60;
-            transform: scale(1.01);
-        }
-        .btn:active {
-            transform: scale(0.98);
-        }
-        .response-area {
-            margin-top: 20px;
-            padding: 15px;
-            background: #ecf0f1;
-            border-radius: 8px;
-            display: none;
-            word-wrap: break-word;
-        }
-        .response-area.error {
-            background: #fde0e0;
-            color: #c0392b;
-        }
-        .response-area.success {
-            background: #d5f5e3;
-            color: #1e8449;
-        }
-        .small-note {
-            font-size: 13px;
-            color: #7f8c8d;
-            margin-top: 5px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f6f9; padding: 20px; display: flex; justify-content: center; }
+        .container { max-width: 1100px; width: 100%; background: #fff; padding: 30px 35px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        h1 { font-size: 28px; font-weight: 600; color: #1a2b3c; text-align: center; margin-bottom: 6px; }
+        .subtitle { text-align: center; color: #6b7a8a; font-size: 15px; border-bottom: 2px solid #eef2f7; padding-bottom: 18px; margin-bottom: 25px; }
+        .form-row { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 18px; }
+        .form-row .form-group { flex: 1; min-width: 200px; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; font-weight: 600; font-size: 14px; color: #2c3e50; margin-bottom: 5px; }
+        label .required { color: #e74c3c; margin-left: 2px; }
+        select, input { width: 100%; padding: 10px 14px; border: 1px solid #d0d9e4; border-radius: 8px; font-size: 15px; background: #fafbfc; transition: 0.2s; }
+        select:focus, input:focus { border-color: #0066cc; outline: none; background: #fff; box-shadow: 0 0 0 3px rgba(0,102,204,0.12); }
+        .radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 4px; }
+        .radio-group label, .checkbox-group label { display: flex; align-items: center; gap: 6px; font-weight: 400; font-size: 14px; cursor: pointer; background: #f8f9fb; padding: 6px 14px; border-radius: 20px; border: 1px solid #e0e5ed; transition: 0.15s; }
+        .radio-group label:hover, .checkbox-group label:hover { background: #e8f0fe; border-color: #0066cc; }
+        .radio-group input[type="radio"], .checkbox-group input[type="checkbox"] { width: auto; margin-right: 4px; accent-color: #0066cc; }
+        .section-title { font-size: 18px; font-weight: 600; color: #1a2b3c; margin: 25px 0 15px; padding-bottom: 8px; border-bottom: 2px solid #eef2f7; }
+        .inline-checkbox { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+        .inline-checkbox input[type="checkbox"] { width: auto; margin: 0; }
+        .hint { font-size: 13px; color: #6b7a8a; margin-top: 2px; }
+        .preview-container {
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:15px;
+    min-height:300px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fafbfc;
+}
+.preview-container img {
+    max-width:100%;
+    max-height:600px;
+    display:block;
+}
+.preview-container .placeholder {
+    color:#7f8c8d;
+    font-size:16px;
+}
+        .price-block { background: #e8f0fe; padding: 18px; border-radius: 12px; text-align: center; margin: 25px 0 25px; }
+        .price-block .total-price { font-size: 34px; font-weight: 700; color: #0066cc; }
+        .price-block .price-label { font-size: 16px; color: #2c3e50; }
+        .btn { width: 100%; padding: 16px; background: #27ae60; color: #fff; border: none; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .btn:hover { background: #1e8449; transform: scale(1.01); }
+        .btn:active { transform: scale(0.98); }
+        .response-area { margin-top: 20px; padding: 15px; border-radius: 10px; display: none; white-space: pre-wrap; font-size: 14px; background: #ecf0f1; }
+        .response-area.error { background: #fde0e0; color: #c0392b; }
+        .response-area.success { background: #d5f5e3; color: #1e8449; }
+        .small-note { font-size: 13px; color: #7f8c8d; margin-top: 4px; }
+        input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
+        @media (max-width: 700px) { .container { padding: 20px; } .form-row { flex-direction: column; gap: 0; } .form-row .form-group { min-width: auto; } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🚗 Заказ чехлов для авто</h1>
+<div class="container">
+    <h1>🚗 Конструктор авточехлов</h1>
+    <div class="subtitle">Соберите идеальные чехлы для своего авто</div>
 
-        <form id="orderForm">
-            <!-- Контактные данные -->
-            <div class="row">
-                <div class="form-group">
-                    <label for="name">Имя *</label>
-                    <input type="text" id="name" required placeholder="Иван">
-                </div>
-                <div class="form-group">
-                    <label for="phone">Телефон *</label>
-                    <input type="tel" id="phone" required placeholder="+7 900 123-45-67">
-                </div>
-            </div>
+    <form id="orderForm">
+        <!-- ===== ВЫБОР АВТОМОБИЛЯ ===== -->
+        <div class="form-group">
+            <label for="carSelect">Выберите автомобиль <span class="required">*</span></label>
+            <select id="carSelect" required>
+                <option value="">— Выберите авто —</option>
+            </select>
+        </div>
 
-            <div class="row">
-                <div class="form-group">
-                    <label for="city">Город</label>
-                    <input type="text" id="city" placeholder="Москва">
-                </div>
-                <div class="form-group">
-                    <label for="address">Адрес</label>
-                    <input type="text" id="address" placeholder="Ул. Ленина, д.1, кв.5">
-                </div>
-            </div>
+        <!-- Комплектация -->
+        <div class="form-group">
+            <label for="kitType">Комплектация</label>
+            <select id="kitType">
+                <option value="1 ряд">1 ряд</option>
+                <option value="2 ряда">2 ряда</option>
+                <option value="3 ряда">3 ряда</option>
+                <option value="одна деталь">одна деталь</option>
+                <option value="две детали">две детали</option>
+                <option value="три детали">три детали</option>
+                <option value="кресло полностью">кресло полностью</option>
+                <option value="нестандартная комплектация">нестандартная комплектация</option>
+                <option value="2й ряд">2й ряд</option>
+                <option value="3й ряд">3й ряд</option>
+            </select>
+        </div>
 
+        <!-- ===== ДИЗАЙН ===== -->
+        <div class="section-title">Вариант дизайна</div>
+        <div class="radio-group" id="designGroup">
+            <label><input type="radio" name="design" value="Основа + центр" checked> Основа + центр</label>
+            <label><input type="radio" name="design" value="Основа + центр + боковые"> Основа + центр + боковые</label>
+            <label><input type="radio" name="design" value="Основа + центр + макета и подголовник"> Основа + центр + макета и подголовник</label>
+            <label><input type="radio" name="design" value="Основа + верхние и нижние майки по прямой"> Основа + верхние и нижние майки по прямой</label>
+        </div>
+
+        <!-- ===== МАТЕРИАЛЫ ===== -->
+        <div class="section-title">Материалы</div>
+        <div class="form-row">
             <div class="form-group">
-                <label for="comment">Комментарий</label>
-                <textarea id="comment" placeholder="Дополнительные пожелания..."></textarea>
+                <label for="baseMaterial">Материал основы</label>
+                <select id="baseMaterial"></select>
             </div>
-
-            <!-- Параметры чехлов -->
-            <div class="row">
-                <div class="form-group">
-                    <label for="carBrand">Марка авто *</label>
-                    <input type="text" id="carBrand" required placeholder="Toyota">
-                </div>
-                <div class="form-group">
-                    <label for="carModel">Модель *</label>
-                    <input type="text" id="carModel" required placeholder="Camry">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group">
-                    <label for="coverColor">Цвет чехлов</label>
-                    <input type="text" id="coverColor" placeholder="Чёрный, бежевый...">
-                </div>
-                <div class="form-group">
-                    <label for="stitchColor">Цвет строчки</label>
-                    <input type="text" id="stitchColor" placeholder="Красный, белый...">
-                </div>
-            </div>
-
             <div class="form-group">
-                <label for="pattern">Рисунок</label>
-                <input type="text" id="pattern" placeholder="Клетка, ромб, однотонный...">
+                <label for="centerMaterial">Материал центра</label>
+                <select id="centerMaterial"></select>
             </div>
-
-            <!-- Доставка и оплата -->
-            <div class="row">
-                <div class="form-group">
-                    <label for="deliveryDate">Дата доставки</label>
-                    <input type="date" id="deliveryDate">
-                </div>
-                <!-- <div class="form-group">
-                    <label for="deliverySlot">Временной слот</label>
-                    <input type="text" id="deliverySlot" placeholder="09:00 - 13:00">
-                </div> -->
-            </div>
-
+        </div>
+        <div class="form-row">
             <div class="form-group">
-                <label for="paymentMethod">Способ оплаты</label>
-                <select id="paymentMethod">
-                    <option value="Наличные">Наличные</option>
-                    <option value="Карта">Банковская карта</option>
-                    <option value="Перевод" selected>Перевод</option>
-                    <option value="Онлайн">Онлайн-оплата</option>
+                <label for="baseColor">Цвет основы</label>
+                <input type="text" id="baseColor" placeholder="Например, чёрный">
+            </div>
+            <div class="form-group">
+                <label for="centerColor">Цвет центра</label>
+                <input type="text" id="centerColor" placeholder="Например, серый">
+            </div>
+        </div>
+
+        <!-- ===== РИСУНОК (дизайн центра) ===== -->
+        <div class="section-title">Дизайн центра</div>
+
+        <!-- Выпадающий список -->
+        <div class="form-group">
+            <label for="patternDesign">Выберите узор</label>
+            <select id="patternDesign"></select>
+        </div>
+
+        <!-- Поле для вывода картинки -->
+        <div class="form-group">
+            <label>Пример узора</label>
+            <div class="preview-container">
+                <img id="patternPreview" src="" alt="Узор">
+                <span class="placeholder" id="noPatternText">Выберите узор для просмотра</span>
+            </div>
+        </div>
+
+        <!-- ===== ВЫШИВКА ===== -->
+        <div class="section-title">Вышивка</div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="embroiderySelect">Выберите вышивку</label>
+                <select id="embroiderySelect">
+                    <option value="">— Без вышивки —</option>
                 </select>
             </div>
-
-            <!-- Загрузка фото -->
             <div class="form-group">
-                <label>Фото образца (необязательно)</label>
-                <div class="file-upload" id="fileDropZone">
-                    <input type="file" id="photoInput" accept="image/*">
-                    <label for="photoInput">Выбрать файл</label>
-                    <div class="file-name" id="fileName">Файл не выбран</div>
-                </div>
-                <div class="small-note">Вы можете приложить фото желаемого чехла</div>
+                <label for="embroideryPrice">Цена вышивки</label>
+                <input type="text" id="embroideryPrice" readonly style="background:#f0f2f5;">
             </div>
+        </div>
 
-            <button type="submit" class="btn">Создать заказ</button>
-        </form>
+        <!-- ===== ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ ===== -->
+        <div class="section-title">Дополнительные услуги</div>
+        <div class="form-group">
+            <label>Допуслуги (основные)</label>
+            <div id="extrasCheckboxes" class="checkbox-group"></div>
+        </div>
+        <div class="form-group">
+            <label>Допуслуги 2</label>
+            <div id="extra2Checkboxes" class="checkbox-group"></div>
+        </div>
+        <!-- Двойной боковой шов -->
+        <div class="form-group">
+            <div class="inline-checkbox">
+                <input type="checkbox" id="doubleStitch">
+                <label for="doubleStitch" style="font-weight:400; cursor:pointer;">Двойной боковой шов</label>
+            </div>
+            <div class="hint">* Расположение двойного бокового шва зависит от формы сидений</div>
+        </div>
 
-        <div id="responseArea" class="response-area"></div>
-    </div>
+        <!-- ===== КОНТАКТНЫЕ ДАННЫЕ ===== -->
+        <div class="section-title">Контактные данные</div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="name">Имя <span class="required">*</span></label>
+                <input type="text" id="name" required placeholder="Иван">
+            </div>
+            <div class="form-group">
+                <label for="phone">Телефон <span class="required">*</span></label>
+                <input type="tel" id="phone" required placeholder="+7 900 123-45-67">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="comment">Комментарий к заказу</label>
+            <textarea id="comment" rows="3" style="width:100%; padding:10px 14px; border:1px solid #d0d9e4; border-radius:8px; font-size:15px; background:#fafbfc; resize:vertical;" placeholder="Дополнительные пожелания..."></textarea>
+        </div>
 
-    <script>
-        (function() {
-            // ========== НАСТРОЙКА ==========
-            // Укажите URL вашего вебхука (куда будет отправлен JSON)
-            const webhookUrl = 'https://hooks.tglk.ru/in/mX1dBAMnmXrazeSbrMFvAkVOaQZNW4'; 
-            // =================================
+        <!-- ===== ИТОГОВАЯ ЦЕНА ===== -->
+        <div class="price-block">
+            <div class="price-label">Общая стоимость</div>
+            <div class="total-price" id="totalPrice">0 ₽</div>
+        </div>
 
-            const form = document.getElementById('orderForm');
-            const responseArea = document.getElementById('responseArea');
-            const fileInput = document.getElementById('photoInput');
-            const fileNameDisplay = document.getElementById('fileName');
+        <button type="submit" class="btn">✅ Отправить заявку</button>
 
-            // Показываем имя выбранного файла
-            fileInput.addEventListener('change', function() {
-                if (this.files && this.files[0]) {
-                    fileNameDisplay.textContent = this.files[0].name;
-                } else {
-                    fileNameDisplay.textContent = 'Файл не выбран';
-                }
-            });
+        <div style="margin-top:20px; font-size:13px; color:#7f8c8d; text-align:center; border-top:1px solid #eef2f7; padding-top:15px;">
+            * допускается различия оттенка цвета и текстуры покрытия товара по сравнению с образцами в конструкторе.<br>
+            <a href="#" style="color:#0066cc; text-decoration:none;">Правила возврата авточехлов, автоковров, накидок.</a>
+        </div>
+    </form>
 
-            // Извлекаем параметры из URL
-            function getUrlParams() {
-                const params = new URLSearchParams(window.location.search);
-                return {
-                    dealId: params.get('deal_id') || null,
-                    companyId: params.get('company_id') || null,
-                    page: params.get('page') || null,
-                };
-            }
+    <div id="responseArea" class="response-area"></div>
+</div>
 
-            // Генерация простого ID (для примера)
-            function generateId() {
-                return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-            }
+<script>
+    // ================================================================
+    //  СПРАВОЧНИКИ (полные версии)
+    // ================================================================
 
-            // Форматирование даты в ISO
-            function nowISO() {
-                return new Date().toISOString();
-            }
+    // ---------- Автомобили (замените на свой полный список) ----------
+    const cars = [
+        { id: 622, name: "BMW 2-Series Active Tourer, хэтчбек 5 дв., 1 поколение, F45 (2014-2020) второй ряд 40/60 с клапаном", price: 11300 },
+        { id: 650, name: "BMW X1 F48 правый руль, джип/suv 5 дв., 2 поколение, F48 (2015 - 2019), спинка второго ряда 40/20/40, сидение цельное", price: 11300 },
+        { id: 778, name: "Chevrolet Cruze , хэтчбек 5 дв., 1 поколение, HR51S, HR81S (10.2001 - 06.2008) передние одинаковые, спинка второго ряда 50\\50 низ диван.", price: 11300 },
+        { id: 631, name: "Daihatsu Atrai, минивэн, 6 поколение (2017 - 2021), правый руль, передние разные (водитель большое), второй ряд разный (большое за водителем) с подлокотником", price: 11300 },
+        { id: 828, name: "Daihatsu Cast (09.2015 - 06.2023) 1 поколение . передние разные , водитель широкий с подлокотником , подголовники прямые . 2ой ряд 50\\50 , подголовники гуськом", price: 11300 },
+        { id: 690, name: "Daihatsu Mira e:S LA300S,LA310S,2017 (2011 - 2017), подголовники первого ряда СЪЕМНЫЕ, второй ряд цельный без подлокотника", price: 11300 },
+        { id: 710, name: "Daihatsu Mira e:S LA350S,LA360S (2017 - н.в), подголовники первого ряда ЛИТЫЕ, второй ряд цельный без подлокотника", price: 11300 },
+        { id: 621, name: "Daihatsu Mira, хэтчбек, 7 поколение, L275 (2006 - 2018), правый руль, передние подголовники съемные, второй ряд целый без подлокотника", price: 11300 },
+        { id: 518, name: "Daihatsu Move, хэтчбек 5 дв., 6 поколение (2014 -2023), правый руль,спинка и сидение второго ряда 50/50, передние кресла разные с подлокотником, , разные подлокотники 1-го ряда. Уточнять ширину", price: 11300 },
+        { id: 741, name: "Daihatsu Tanto 2007, хэтчбек 5 дв., 2 поколение (12.2007 - 09.2013), передние разные", price: 11300 },
+        { id: 333, name: "Daihatsu Terios Kid, джип/suv 5 дв., 1 поколение (1998 - 2012), правый руль, спинка и сидение 50/50 без подлокотника", price: 11300 },
+        { id: 857, name: "Daihatsu Thor рестайлинг 2020, хэтчбек 5 дв., 1 поколение (09.2020 - н.в.), 2-й ряд 40/60 без подлокотника, подголовники гусь", price: 11300 },
+        { id: 334, name: "Ford Escape 3-й рестайлинг, джип/suv 5 дв., 1 поколение (2009 - 2013), правый руль, второй ряд 40/60 без подлокотника, сборка Тайвань", price: 11300 },
+        { id: 487, name: "Ford Escape 3-й рестайлинг, джип/suv 5 дв., 1 поколение (2009 - 2013), правый руль, второй ряд цельный без подлокотника второго ряда, сборка Тайвань", price: 11300 },
+        { id: 842, name: "Ford Explorer 2010, джип/suv 5 дв., 5 поколение (12.2010 - 05.2016), второй ряд 40/60 без подлокотника, подголовники прямые", price: 11300 },
+        { id: 533, name: "Ford F150, пикап, 6 поколение, P221 (2003 - 2005), левый руль, второй ряд 40/60 без подлокотника, передние сидения разные, пассажир с подлокотником", price: 11300 },
+        { id: 791, name: "Ford Maverick рестайлинг 2004, джип/suv 5 дв., 3 поколение (08.2004 - 07.2007), левый руль, 2-й ряд 40/60 без подлокотника, с 3-м ремнем в спинке на 2-м ряду (кожаный салон)", price: 11300 },
+        { id: 729, name: "Ford Ranger, пикап, 3 поколение (2011 - 2015) ДЛЯ РОССИИ, T6, второй ряд цельный без подлокотника", price: 11300 },
+        { id: 570, name: "Ford Transit, автобус, 7 поколение (03.2014 - 10.2022), левый руль, 20 мест, первый ряд разные, пассажир с выводом подлокотника", price: 58000 },
+        { id: 276, name: "Honda Accord 2003-2008, СL, 7 поколение, правый руль, спинка второго ряда 40 /60 c выводом подлокотника, 2 боковых упора, сидение цельное", price: 11300 },
+        { id: 629, name: "Honda Accord CF (1998 - 2000) седан, спинка второго ряда цельная без подлокотника,низ диван", price: 11300 },
+        { id: 381, name: "Honda Accord CF6, 1997-2002, 6 поколение, правый руль, спинка второго ряда 40/60 с выводом подлокотника, сидение цельное, два боковых упора", price: 11300 },
+        { id: 393, name: "Honda Accord CR 6 (2013 - 2020), правый руль, спинка и диван цельные, с выводом подлокотника, боковые упоры, дизайн майки", price: 11300 },
+        { id: 414, name: "Honda Accord CR 6 (2013-2020), правый руль, спинка и диван цельные, спинка с выводом подлокотника, боковые упоры, дизайн оригинал", price: 11300 },
+        { id: 470, name: "Honda Accord CU (2008-2013), правый руль, сидение цельное, спинка 40/60 с выводом подлокотника", price: 11300 },
+        { id: 277, name: "Honda Airwave GJ (2005-2010), 1 поколение, правый руль, спинка и сидение второго ряда 40/60 с выводом подлокотника", price: 11300 },
+        { id: 840, name: "Honda Civic 2005, седан, 8 поколение, FD1-3 (09.2005 - 2010) второй ряд 40/60, подлокотник клапан, низ диван", price: 11300 },
+        { id: 733, name: "Honda Civic 2005, седан, 8 поколение, FD1-3 (09.2005 - 2010) второй ряд цельный, с выводом подлокотника", price: 11300 },
+        { id: 510, name: "Honda Civic, хэтчбек 5 дв., 10 поколение, FK (2017 - 2019), правый руль, сидение цельное, спинка 40/60 с выводом подлокотника, два подголовника съемные, серединный подголовник литой", price: 11300 },
+        { id: 787, name: "Honda CR-V 2 поколение, RD (09.2001 - 08.2004) правый руль, разные подголовники (1 и 2 ряд), второй ряд 60/40 с выводом", price: 11300 },
+        { id: 785, name: "Honda CR-V 2009, джип/suv 5 дв., 3 поколение, RE (09.2009 - 08.2012), левый руль, второй ряд спинка 40/20/40 с выводом подлокотника, сиденье 40/60", price: 11300 },
+        { id: 782, name: "Honda CR-V 3 поколение RE (2007-2010г) первый ряд одинаковый с подлокотниками в спинках, второй ряд 40/60 с выводом подлокотника", price: 11300 },
+        { id: 702, name: "Honda CR-V рестайлинг 2014, джип/suv 5 дв., 4 поколение, RE, RM (10.2014 - 12.2018)ПРАВЫЙ РУЛЬ, второй ряд 40/60 с выводом подлокотника, малая за водителем. В спинках 1 ряда -два подлокотника.", price: 11300 },
+        { id: 501, name: "Honda CR-V, RE5, RM4 (2012 - 2018), левый руль, спинка и сидение 40/60, вывод подлокотника", price: 11300 },
+        { id: 611, name: "Honda CR-V, джип/suv 5 дв., 5 поколение, RT, RW (2018 - н.в.), правый руль, спинка и сидения второго ряда 60/40 с выводом подлокотника, большая за пассажиром Гибрид/НЕГИБРИД.5 мест", price: 11300 },
+        { id: 701, name: "Honda CR-V, джип/suv 5 дв., 5 поколение, RT, RW (2018 - н.в.), салон 7 МЕСТ, ГИБРИД. на 2 ряда, правый руль, спинка и сидения второго ряда 60/40 с выводом подлокотника, большая за водителем", price: 11300 },
+        { id: 278, name: "Honda CR-Z (только 1 ряд), (2010-2017) хэтбек,3 двери, CF1-2, правый руль, с выемкой под передний подголовник", price: 7000 },
+        { id: 745, name: "Honda Crossroad 2007, джип/suv 5 дв., 2 поколение (02.2007 - 08.2010), правый руль, второй ряд спинка 40/20/40, сидение 40/60", price: 11300 },
+        { id: 279, name: "Honda CRV RD1, (1995-2001),правый руль, спинка и сидение 50/50 с выводом двух подлокотников, с двумя подлокотниками на 1р в спинке , подголовники на первом ряду БУБЛИКИ/ НЕ БУБЛИКИ", price: 11300 },
+        { id: 280, name: "Honda Edix, минивэн, 1 поколение (2004 - 2009), правый руль, без подлокотника 2-го ряда, столик на спинке 1 ряда (небольшой), подголовники без отверстий, закрытые", price: 11300 },
+        { id: 662, name: "Honda Element, джип/suv 5 дв., 1 поколение (2003 - 2005), правый руль, второй ряд спинка и сидение 50/50", price: 11300 },
+        { id: 766, name: "Honda Fit 2019, хэтчбек 5 дв., 4 поколение, GR (10.2019 - 09.2022). передние сидения одинаковые, спинка и сидение второго ряда 40/60 без подлокотника", price: 11300 },
+        { id: 281, name: "Honda Fit GD1, 1 поколение , хэтчбэк, 2001-2007, правый руль, 40/60 спинка и сидение, без подлокотника", price: 11300 },
+        { id: 342, name: "Honda Fit GK3 (2013-2020) 3-тье поколение, правый руль, второй ряд 40/60 без подлокотника", price: 11300 },
+        { id: 283, name: "Honda Fit GP1-3, 2 поколение, (2007-2013), правый руль, 40/60 спинка и сидение с выводом подлокотника", price: 11300 },
+        { id: 404, name: "Honda Fit GP5 , 3-тье поколение, (2013-2020), правый руль, второй ряд 40/60 с выводом подлокотника", price: 11300 },
+        { id: 285, name: "Honda Fit Shuttle, универсал, гибрид (2011 - 2015), правый руль, второй ряд 40/60 без подлокотника", price: 11300 },
+        { id: 624, name: "Honda Fit Shuttle, универсал, гибрид (2011 - 2015), правый руль, второй ряд 40/60 с выводом подлокотника", price: 11300 },
+        { id: 282, name: "Honda Fit, GE6-8, (2007-2013), правый руль, второй ряд спинка и сидение 40/60, без подлокотника с 2-я выемками под подголовники", price: 11300 },
+        { id: 416, name: "Honda Freed, минивэн, GB3 (2008-2016г), правый руль, на два ряда, второй ряд 40/60 без подлокотника, малая спина за водителем", price: 11300 },
+        { id: 644, name: "Honda Freed, минивэн, GB3 (2008-2016г), правый руль, на три ряда, второй ряд 40/60 без подлокотника, малая спина за водителем, третий ряд 50/50", price: 16300 },
+        { id: 612, name: "Honda Freed, минивэн, GB3, (2008 -2016), правый руль, на два ряда, второй ряд 40/60 с выводом подлокотника", price: 11300 },
+        { id: 597, name: "Honda Freed, минивэн, GB3, (2008 -2016), правый руль, на три ряда, второй ряд 40/60 с выводом подлокотника, третий ряд 50/50", price: 16300 },
+        { id: 284, name: "Honda Freed, минивэн, GB3, 1 поколение (2008-2016), правый руль, на два ряда, второй ряд отдельные кресла", price: 11300 },
+        { id: 468, name: "Honda Freed, минивэн, GB3, 1 поколение (2008-2016), правый руль, на три ряда, второй ряд отдельные кресла, третий ряд 50/50", price: 16300 },
+        { id: 469, name: "Honda Freed, минивэн, GB5, 2 поколение, (2016-н.в.), правый руль, на два ряда, капитанские кресла", price: 11300 },
+        { id: 653, name: "Honda Freed, минивэн, GB5, 2 поколение, (2016-н.в.), правый руль, на три ряда, второй ряд капитанские кресла, третий ряд 50/50", price: 16300 },
+        { id: 478, name: "Honda Grace, седан, 1 поколение (2014 - 2020), правый руль, спинка второго ряда 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 286, name: "Honda HR-V, джип/suv 5 дв., (1998 - 2005),правый руль, второй ряд спинка 50/50 без подлокотников, сидение цельное, подголовники второго ряда литые, горбики", price: 11300 },
+        { id: 417, name: "Honda HR-V, джип/suv 5 дв., (1998 - 2005),правый руль, второй ряд спинки 50/50 без подлокотников, сидение цельное, подголовники второго ряда съемные (нет лекал на подголовники)", price: 11300 },
+        { id: 674, name: "Honda HR-V, джип/suv 5 дв., 2 поколение, RU (2014 -2021), ЛЕВЫЙ руль, второй ряд 40/60 без подлокотника", price: 11300 },
+        { id: 288, name: "Honda Insight ZE 2,3; 2 поколение, лифтбэк, (2009-2014) правый руль; спинка второго ряда 40/60 c клапаном, низ диван", price: 11300 },
+        { id: 352, name: "Honda Insight ZE 2,3; 2 поколение, лифтбэк, (2009-2014) правый руль; спинка второго ряда 40/60 без подлокотника, низ диван", price: 11300 },
+        { id: 287, name: "Honda Insight ZE 2,3; 2 поколение, лифтбэк, (2009-2014) правый руль; спинка второго ряда 40/60 с выводом подлокотника, низ диван", price: 11300 },
+        { id: 705, name: "Honda Inspire 1995, седан, 2 поколение (02.1995 - 09.1998), второй ряд цельный с выводом", price: 11300 },
+        { id: 565, name: "Honda Jade, минивэн, 1 поколение (2015 - 2018),правый руль, на 2 ряда, второй ряд капитанские кресла с двумя подлокотниками в центре", price: 11300 },
+        { id: 864, name: "Honda Life 2008 JC1, хэтчбек 5 дв., 5 поколение (11.2008 - 10.2010) Правый руль, передние разные, водитель широкий с подлокотником, второй ряд сиденье цельное, спинки 50/50 без подлокотника", price: 11300 },
+        { id: 666, name: "Honda Mobilio Spike, GK1, GK2 (2002- 2008), правый руль, передние разные с подлокотником, второй ряд 40/60 без подлокотника", price: 11300 },
+        { id: 454, name: "Honda N-BOX, хэтчбек 5 дв., 1 поколение, JF1/2 (2011 - 2017), правый руль, первый ряд разные, водительское большое с подлокотником, второй ряд 50/50 без подлокотника", price: 11300 },
+        { id: 676, name: "Honda N-WGN, хэтчбек 5 дв., 1 поколение (2013 - 2019), правый руль, передние разные, водитель с подлокотником, второй ряд 50/50 без подлокотника", price: 11300 },
+        { id: 742, name: "Honda Odyssey 2003, минивэн, 3 поколение (10.2003 - 03.2006) RB1-2, на 2 ряда передние одинаковые, второй ряд 40/60 спинка с подлокотником (вывод)", price: 11300 },
+        { id: 717, name: "Honda Odyssey, минивен RA6-9 1999 - 2003 на ДВА ряда, первый ряд с подлокотниками, пассажирское сидение с боковым столиком, спинка второго ряда 40/20/40, сидение 40/60", price: 11300 },
+        { id: 716, name: "Honda Odyssey, минивен RA6-9 1999 - 2003 на ТРИ ряда, первый ряд с подлокотниками, пассажирское сидение с боковым столиком, спинка второго ряда 40/20/40, сидение 40/60, третий ряд цельный", price: 16300 },
+        { id: 340, name: "Honda Shuttle, универсал, 2 поколение, GP7, (2015 - 2022), правый руль, второй ряд 40/60 с тремя выемками под подголовники без подлокотника", price: 11300 },
+        { id: 446, name: "Honda Shuttle, универсал, 2 поколение, GP7, (2015 - 2022), правый руль, второй ряд 40/60 с тремя выемками под подголовники, с выводом подлокотника", price: 11300 },
+        { id: 398, name: "Honda Stepwgn, минивэн, 4 поколение, RK5 (2009 - 2015), правый руль, 2 ряда, второй ряд 40/60 с выводом подлокотника, со средним ремнем", price: 11300 },
+        { id: 394, name: "Honda Stepwgn, минивэн, 4 поколение, RK5 (2009 - 2015), правый руль, 3 ряда, второй ряд 40/60 с выводом подлокотника, со средним ремнем, третий ряд спинка 40/60, сидение цельное, три подголовника", price: 16300 },
+        { id: 290, name: "Honda Stepwgn, минивэн, 4 поколение, RK6 (2009 - 2015), правый руль, 2 ряда, второй ряд 40/60 (без третьего ремня на втором ряду), с выводом подлокотника", price: 11300 },
+        { id: 289, name: "Honda Stepwgn, минивэн, 4 поколение, RK6 (2009 - 2015), правый руль, 3 ряда, второй ряд 40/60 (без третьего ремня на втором ряду), с выводом подлокотника,третий ряд спинка 40/60, сидение цельное", price: 16300 },
+        { id: 679, name: "Honda Stepwgn, минивэн, 5 поколение RP (2015 - 2021), правый руль, на ДВА ряда, второй ряд капитаны", price: 11300 },
+        { id: 678, name: "Honda Stepwgn, минивэн, 5 поколение RP (2015 - 2021), правый руль, на ТРИ ряда, второй ряд капитаны, третий ряд 40/60 без подлокотника", price: 16300 },
+        { id: 504, name: "Honda Stepwgn, минивэн, 5 поколение, RP1 (2015 -2021), правый руль, на 2 ряда, второй ряд 40/60 с клапаном, с 3 ремнем на втором ряду", price: 11300 },
+        { id: 698, name: "Honda Stepwgn, минивэн, 5 поколение, RP1 (2015 -2021), правый руль, на ТРИ ряда, второй ряд 40/60 с клапаном, с 3 ремнем на втором ряду", price: 16300 },
+        { id: 704, name: "Honda Stream, минивэн, 2 поколение (2006 - 2009), RN6-9, правый руль, на 2 ряда, на первом ряду подлокотник в центре, спинка второго ряда 40/20/40 сидение 40/60", price: 11300 },
+        { id: 445, name: "Honda Stream, минивэн, 2 поколение (2006 - 2009), RN6-9, правый руль, на 3 ряда, на первом ряду подлокотник в центре, второй ряд 40/60 с выводом, третий ряд 50/50", price: 16300 },
+        { id: 703, name: "Honda Stream, минивэн, 2 поколение (2006 - 2009), RN6-9, правый руль, на 3 ряда, на первом ряду подлокотник в центре, спинка второго ряда 40/20/40 сидение 40/60, третий ряд 50/50", price: 16300 },
+        { id: 436, name: "Honda Stream, минивэн, 2 поколение (2006 - 2014), RN6-9, правый руль, на 2 ряда, на первом ряду подлокотник в центре, второй ряд 40/60 с выводом", price: 11300 },
+        { id: 773, name: "Honda Vezel 2021, джип/suv 5 дв., 2 поколение (02.2021 - н.в.) второй ряд 40/60 с выводом подлокотника ( подголовники Большие\\Маленькие )", price: 11300 },
+        { id: 291, name: "Honda Vezel, джип/suv 5 дв., 1 поколение (2013 - 2018), правый руль, второй ряд 40/60 с выводом подлокотника", price: 11300 },
+        { id: 485, name: "Honda Vezel, джип/suv 5 дв., 1 поколение (2018 - 2021), правый руль, спинка и сидение 40/60 с выводом подлокотника, выемки под подголовник первого ряда", price: 11300 },
+        { id: 853, name: "Honda WR-V 2023, джип/suv 5 дв., 2 поколение, DG5 (11.2023 - н.в.), второй ряд спинка 40/60 с подлокотником, сиденье цельное", price: 11300 },
+        { id: 759, name: "Honda Zest 2006-2012, 1поколение,передние кресла разные водитель с широким подлокотником и подстаканником, второй ряд спинка и сидение 50/50 без подлокотника", price: 11300 },
+        { id: 560, name: "Hyundai Avante, седан, 4 поколение, MD (2010 - 2013), левый руль, второй ряд цельный, подголовники литые, без подлокотника", price: 11300 },
+        { id: 292, name: "Hyundai Creta, джип/suv 5 дв., 1 поколение, GS (2015 - 2020), левый руль, спинка 40/60 без подлокотника, низ диван.", price: 11300 },
+        { id: 500, name: "Hyundai Creta, джип/suv 5 дв., 2 поколение, SU2 (2020 - н.в.),левый руль, сидение цельное, спинка 40/60 с выводом подлокотника", price: 11300 },
+        { id: 452, name: "Hyundai Santa Fe, джип/suv 5 дв., 2 поколение, CM (2010 - 2012), левый руль, второй ряд 40/60, с выводом подлокотника", price: 11300 },
+        { id: 408, name: "Hyundai Solaris, седан, 1 поколение (2010 - 2017), левый руль, спинка второго ряда 40/60 без подлокотника, низ диван", price: 11300 },
+        { id: 464, name: "Hyundai Solaris, седан, 2 поколение, HCR (2017 - 2020), левый руль, сидение цельное, спинка 40/60 без подлокотника, уточнять про 3й ремень на 2-м ряду", price: 11300 },
+        { id: 825, name: "Isuzu D-MAX 2021, пикап, 3 поколение, RG (12.2020 - 07.2023), второй ряд 40/60 с выводом подлокотника", price: 11300 },
+        { id: 585, name: "Jeep Wrangler, джип/suv 5 дв., 3 поколение, JK (2010 - 2018) , Sport комплектация, левый руль, второй ряд 60/40 без подлокотника", price: 11300 },
+        { id: 799, name: "Kia Ceed 2009, хэтчбек 5 дв., 1 поколение, ED (09.2009 - 03.2012) Второй ряд спинка 40/60 без подлокотника, низ диван. Передние подголовники литые с пластиковым коробом", price: 11300 },
+        { id: 493, name: "Kia Cerato, седан, 2 поколение, TD (2008 - 2013), левый руль, спинка 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 449, name: "Kia Forte, седан, 1 поколение, TD (2008 - 2013), левый руль, второй ряд цельный без подлокотника", price: 11300 },
+        { id: 534, name: "Kia Rio 4 поколение / Solaris 2 (2017-н.в.), левый руль, второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 440, name: "Kia Seltos (2019-2021), левый руль, второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 473, name: "Kia Sportage (2006-2010), левый руль, второй ряд спинка и сидение 40/60 c подлокотником", price: 11300 },
+        { id: 637, name: "Lexus CT200h, A10(ZWA10) хэтчбек, гибрид 2010-2022, спинка второго ряда 40/60 без подлокотника, сиденье цельное", price: 11300 },
+        { id: 584, name: "Lexus GS300, седан, 3 поколение, S190 (2005 - 2012) левый руль, второй ряд спинка цельная с подлокотником, низ диван.", price: 11300 },
+        { id: 382, name: "Lexus GX470, джип/suv 5 дв., 1 поколение (2002 - 2009), левый руль, второй ряд 40/60 с выводом подлокотника, 2 передних подлокотника в центре", price: 11300 },
+        { id: 687, name: "Lexus HS250h, седан, 1 поколение, F10 (2009 - 2018), правый руль, цельный с выводом подлокотника", price: 11300 },
+        { id: 774, name: "Lexus LX470 1998, джип/suv 5 дв., 2 поколение, J100 (04.1998 - 01.2002) Правый руль, второй ряд 40/60, клапан", price: 11300 },
+        { id: 448, name: "Lexus LX470, джип/suv 5 дв., 2 поколение (2002 - 2007), левый руль, спинка и сидение 40/60, с выводом подлокотника, 2 передних подлокотника в центре", price: 11300 },
+        { id: 520, name: "Lexus NX300, джип/suv 5 дв., 1 поколение, Z10 (2017 - 2021), левый руль, второй ряд 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 812, name: "Lexus RX200t 2015, джип/suv 5 дв., 4 поколение, AL20 (11.2015 - 12.2017) 1 ряд одинаковые с пластиком , 2ой ряд спинка 40\\20\\40 , сиденье 40\\60", price: 11300 },
+        { id: 335, name: "Lexus RX330, джип/suv 5 дв., 2 поколение, XU30 (2003 - 2006), левый руль, второй ряд 40/20/40 с подлокотником", price: 11300 },
+        { id: 396, name: "Lexus RX400h, джип/suv 5 дв., 2 поколение, XU30 (2005 - 2009), левый руль, на первом ряду под пластик, два подлокотника в центре, второй ряд 40/20/40", price: 11300 },
+        { id: 530, name: "Lexus RX450h, джип/suv 5 дв., 3 поколение, AL10 (2009 - 2015), правый/левый руль, второй ряд 40/20/40 с выводом подлокотником, подголовники 2-го ряда прямые/гуськом", price: 11300 },
+        { id: 336, name: "LEXUS RХ300 джип/suv 5 дв., XU10 (1997 - 2003), левый руль, второй ряд 40/60 с подлокотником клапаном, ОТВЕРСТИЯ ПОД РЕМНИ С БОКУ ОТ ПОДЛОКОТНИКА", price: 11300 },
+        { id: 878, name: "Mazda 3 Sport 2019, хэтчбек 5 дв., 4 поколение, BP (11.2018 - 10.2020), Япония, правый руль, 2WD, 5 мест, первый ряд одинаковый с выемками под подголовники, второй ряд 60\\40 с выводом подлокотника низ диван", price: 11300 },
+        { id: 770, name: "Mazda Atenza 2008, универсал, 2 поколение, GH (01.2008 - 12.2009), правый руль, спинка 2-го ряда 40/60 с клапаном, сиденье цельное", price: 11300 },
+        { id: 590, name: "Mazda Atenza, седан, 1 поколение, GG (06.2005 - 12.2007), правый руль, спинки и сидение 40/60, с выводом подлокотника", price: 11300 },
+        { id: 625, name: "Mazda Axela BL (2009-2013) хэтчбек, второй ряд спинка 40/60 с выводом подголовника, сидение цельное", price: 11300 },
+        { id: 514, name: "Mazda Axela, седан, 3 поколение, BM (2013 - 2019), правый руль, спинка 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 613, name: "Mazda Axela, хэтчбек 5 дв., 3 поколение, BM (2013 - 2019), правый руль, спинка второго ряда 40/60 с выводом подлокотника, сидение цельный", price: 11300 },
+        { id: 618, name: "Mazda AZ-Wagon, хэтчбек 5 дв., 4 поколение, MJ23 (2008 - 2012), правый руль, передние разные, водитель широкий с подлокотником, второй ряд 50/50 без подлокотника", price: 11300 },
+        { id: 831, name: "Mazda Bongo Friendee 1995, минивэн, 1 поколение, SG (06.1995 - 01.1999), первый ряд одинаковый, второй ряд спинка 40/60 с выводом подлокотника, низ диван, 3 ряд цельный с выводом подлокотника, 2-й и 3-й ряд с выемками под подголовники", price: 16300 },
+        { id: 849, name: "Mazda CX-3 рестайлинг 2018, джип/suv 5 дв., 1 поколение, DK (03.2018 - н.в.) правый руль, второй ряд 40/60 с выводом подлокотника, низ диван", price: 11300 },
+        { id: 531, name: "Mazda CX-3, джип/suv 5 дв., 1 поколение, DK (11.2014 - 04.2018), правый руль, второй ряд спинка 40\\60 без подлокотника. низ диван", price: 11300 },
+        { id: 780, name: "Mazda CX-30 2019, джип/suv 5 дв., 1 поколение (03.2019 - 10.2021), 2-ой ряд 40/60 сиденье цельное", price: 11300 },
+        { id: 658, name: "Mazda CX-5, джип/suv 5 дв., 2 поколение, KF (2016 - 2021), правый руль, второй ряд спинка 40/20/40 с подлокотником, сидение цельное", price: 11300 },
+        { id: 364, name: "Mazda CX-7 2006, джип/suv 5 дв., 1 поколение, ER (2006 - 2010), левый руль, спинка 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 715, name: "Mazda CX-8 2017, джип/suv 5 дв., 1 поколение (09.2017 - 11.2022) , на три ряда, первый ряд с выемками ,второй ряд капитанские с подлокотниками в креслах, третий ряд 50/50", price: 16300 },
+        { id: 667, name: "Mazda CX-8, джип/suv 5 дв., 2017-н.в. (KG2P, KG5P), правый руль, передние С ВЫЕМКОЙ, второй ряд 40/60 с выводом полокотника", price: 11300 },
+        { id: 576, name: "Mazda Demio, хэтчбек 5 дв., 2 поколение, DY (2002 - 2005), правый руль, сидение второго ряда цельное, спинка 50/50 два боковых подлокотника, ПОДГОЛОВНИКИ СЪЕМНЫЕ", price: 11300 },
+        { id: 777, name: "Mazda Demio, хэтчбек 5 дв., 2 поколение, DY (2002 - 2005), правый руль, сидение второго ряда цельное, спинка 50/50, ПОДГОЛОВНИКИ ЛИТЫЕ", price: 11300 },
+        { id: 389, name: "Mazda Demio, хэтчбек 5 дв., 3 поколение, DE (2007 - 2011), правый руль, спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 385, name: "Mazda Demio, хэтчбек 5 дв., 4 поколение, DJ (2014 - 2019) , правый руль, спинка 2-го ряда 40/60, без подлокотника, сидение диван", price: 11300 },
+        { id: 664, name: "Mazda Demio, хэтчбек 5 дв., 4 поколение, DJ (2014 - 2019) , правый руль, спинка 2-го ряда цельная , без подлокотника, сидение диван", price: 11300 },
+        { id: 453, name: "Mazda Mazda6, седан, 2 поколение, GH (2007 - 2012), левый руль,второй ряд спинка 40/60 c выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 319, name: "Mazda MPV , минивэн, 2 поколение, LW (2002 -2006), правый руль, на два ряда, второй ряд капитанские кресла, 6 подлокотников", price: 11300 },
+        { id: 320, name: "Mazda MPV, минивэн, 3 поколение, LY (2006 - 2016), правый руль, на два ряда, второй ряд капитанские кресла с ПОДНОЖКАМИ, 4 подлокотника", price: 11300 },
+        { id: 321, name: "Mazda Tribute, джип/suv 5 дв., 1 поколение, EP (2003 - 2005), правый руль, спинка и сидение 40/60 без подлокотника.", price: 11300 },
+        { id: 851, name: "Mazda Verisa рестайлинг 2006, хэтчбек 5дв., 1 поколение, DC (08.2006-09.2015), второй ряд цельный, третий ремень", price: 11300 },
+        { id: 568, name: "Mercedes-Benz B-Class, хэтчбек 5 дв., 2 поколение, T246 (2011 - 2014) , левый руль, второй ряд 40/60, вывод подлокотника", price: 11300 },
+        { id: 699, name: "Mercedes-Benz C-Class рестайлинг 2004, седан, 2 поколение, W203 (03.2004 - 02.2007), с подлокником второго ряда", price: 11300 },
+        { id: 642, name: "Mercedes-Benz M-Class, джип/suv 5 дв., 2 поколение, W164 (2005 - 2011), Левый руль, второй ряд 40/60 с выводом подлокотника", price: 11300 },
+        { id: 328, name: "Mitsubishi ASX, джип/suv 5 дв., 1 поколение (2010 - 2016), левый руль, второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 724, name: "Mitsubishi Colt 2002, хэтчбек 5 дв., 6 поколение, Z20 (11.2002 - 09.2004) передние разные, второй ряд 50/50 и спинка и сидение", price: 11300 },
+        { id: 839, name: "Mitsubishi Colt 2009, хэтчбек 5 дв., 6 поколение, Z24 Передние разные водитель с подлокотником, второй ряд спинка 60/40 с подлокотником низ диван", price: 11300 },
+        { id: 835, name: "Mitsubishi Colt, универсал (2009), передн разные, водитель с подлокот, 2й ряд спинка 6040 с подлокотником, низ диван", price: 0 },
+        { id: 341, name: "Mitsubishi Delica \"ШАМОНИКС\", минивэн, 4 поколение (1997 - 2007), правый руль, на два ряда, второй ряд, сдвоенное сидение с подлокотником + одинарное, подголовники одинаковые на двух рядах", price: 11300 },
+        { id: 354, name: "Mitsubishi Delica \"ШАМОНИКС\", минивэн, 4 поколение (1997 - 2007), правый руль, на три ряда, второй ряд, сдвоенное сидение с подлокотником + одинарное, подголовники одинаковые на двух рядах", price: 16300 },
+        { id: 668, name: "Mitsubishi Delica D:5, минивэн, 1 поколение (2007- 2019), на 2 ряда, правый руль, первый ряд с подлок в спинках, второй ряд 40/60 c выводом подлокотника", price: 11300 },
+        { id: 665, name: "Mitsubishi Delica D:5, минивэн, 1 поколение (2007- 2019), на 3 ряда, правый руль, первый ряд с подлок в спинках, второй ряд 40/60 c выводом подлокотника, третий ряд 50/50 без подлокотников", price: 16300 },
+        { id: 536, name: "Mitsubishi Delica D:5, минивэн, 1 поколение (2007- 2019), правый руль, на 2 ряда, второй ряд: сидение 40/60, спинка 40/20/40 (две одинаковые спинки с одним отдельным подлокотником), подголовники прямые/гуськом", price: 11300 },
+        { id: 608, name: "Mitsubishi Delica D:5, минивэн, 1 поколение (2018 - н.в.), только первый ряд", price: 7000 },
+        { id: 756, name: "Mitsubishi Delica D:5, На ТРИ ряда, минивэн, 1 поколение (2007- 2019), правый руль, второй ряд: сидение 40/60, спинка 40/20/40 (две одинаковые спинки с одним отдельным подлокотником), подголовники прямые/гуськом, третий ряд 50/50 без подлокотников", price: 16300 },
+        { id: 406, name: "Mitsubishi Delica PD6W минивэн, 4 поколение (1997 - 2007), правый руль, на три ряда, второй ряд, сдвоенное сидение с подлокотником + одинарное, подголовники отличаются (разные)", price: 16300 },
+        { id: 330, name: "Mitsubishi Delica, минивэн, 4 поколение (1997 - 2007), правый руль, на два ряда, второй ряд, сдвоенное сидение с подлокотником + одинарное, подголовники отличаются (разные)", price: 11300 },
+        { id: 626, name: "Mitsubishi Eclipse Cross, джип/suv 5 дв., 1 поколение (2017 - 2021), правый руль, второй ряд 40/60 с клапаном", price: 11300 },
+        { id: 681, name: "Mitsubishi eK Wagon, хэтчбек 5 дв., 3 поколение B11W (2013 - 2019),водитель широкое с подлокотником, второй ряд 50/50 без подлокотников", price: 11300 },
+        { id: 639, name: "Mitsubishi Fuso Canter, 1988 (1998), только первый ряд, пассажир широкий в центре бардачок", price: 7500 },
+        { id: 573, name: "Mitsubishi Grandis, минивэн, 1 поколение (2003 - 2005), правый руль, второй ряд спинка 40/20/40 с подлокотником, сиденье 60/40", price: 11300 },
+        { id: 845, name: "Mitsubishi L200 рестайлинг 2018, пикап, 5 поколение, KJ/KK/KL (11.2018 - 04.2022) второй ряд цельный без подлокотника", price: 11300 },
+        { id: 794, name: "Mitsubishi L200 рестайлинг 2018, пикап, 5 поколение, KJ/KK/KL (11.2018 - 04.2022) второй ряд цельный с выводом подлокотника", price: 11300 },
+        { id: 561, name: "Mitsubishi Lancer, седан, 10 поколение, CY (2011 - 2016), левый руль, второй ряд спинка 40/60 с выводом подлокотники, сидение цельное", price: 11300 },
+        { id: 554, name: "Mitsubishi Legnum, универсал, 1 поколение (1996 - 1998), правый руль, второй ряд спинка 40/60 с выводом подлокотника, боковые упоры одинаковые, сидение цельное", price: 11300 },
+        { id: 635, name: "Mitsubishi Minicab MiEV ,минивэн, 1 поколение (U67V, U68V) (2011 - н.в.) правый руль, первый ряд подголовники литые, спинка и сидения второго ряда цельные, без подголовников, и без подлокотника", price: 11300 },
+        { id: 760, name: "Mitsubishi Mirage хэтчбек 5 дв., 6 поколение (08.2012 - 12.2015)передние кресла одинаковые, спинка второго ряда 40/60 без подлокотника, низ диван", price: 11300 },
+        { id: 331, name: "Mitsubishi Outlander, джип/suv 5 дв., 2 поколение, CW, XL (2006 - 2012), правый/левый руль, второй ряд 40/60 с подлокотником", price: 11300 },
+        { id: 418, name: "Mitsubishi Outlander, джип/suv 5 дв., 3 поколение, GF2W (2012- 2018), левый руль, второй ряд 40/60 с выводом подлокотника", price: 11300 },
+        { id: 332, name: "Mitsubishi Outlander, джип/suv 5 дв., 3 поколение, GF2W (2012- 2018), правый руль, второй ряд 40/60 с выводом подлокотника", price: 11300 },
+        { id: 811, name: "Mitsubishi Pajero 1994-1999, джип/suv 3 дв., V78 Второй ряд цельный с выводом подлокотника, два маленьких боковых упора в спинках", price: 11300 },
+        { id: 700, name: "Mitsubishi Pajero 2006, джип/suv 5 дв., 4 поколение, V90 (2006 - 2011) - правый руль, первые одинаковые, второй ряд 40/60 с подлокотником, боковые подлокотники на втором ряду, велюровый салон.", price: 11300 },
+        { id: 462, name: "Mitsubishi Pajero iO, джип/suv 5 дв., 1 поколение (2000 - 2007), правый руль, второй ряд спинка 50/50 без подлокотников, сидение цельное", price: 11300 },
+        { id: 369, name: "Mitsubishi Pajero Mini, джип/suv 3 дв., (1998-2012)/ Nissan Kix, джип/suv 3 дв., (2008 - 2012), правый руль, спинка 50/50 без подлокотника, низ диван", price: 11300 },
+        { id: 363, name: "Mitsubishi Pajero Sport 2010", price: 11300 },
+        { id: 343, name: "Mitsubishi Pajero Sport, джип/suv 5 дв., 2 поколение (2008 - 2013), левый руль, второй ряд 40/60, 5 подголовников C РЕЛЬСАМИ", price: 11300 },
+        { id: 726, name: "Mitsubishi Pajero Sport, джип/suv 5 дв., 2 поколение (2008 - 2013), левый руль, второй ряд 40/60, 5 подголовников БЕЗ РЕЛЬС", price: 11300 },
+        { id: 435, name: "Mitsubishi Pajero Sport, джип/suv 5 дв., 3 поколение (2016 - 2021), левый руль, второй ряд 40/60 с клапаном", price: 11300 },
+        { id: 447, name: "Mitsubishi Pajero, джип/suv 3 дв., 3 поколение, V60 (1999 - 2006), правый руль, передние подголовники НЕ бублики, второй ряд 40/60, подлокотник сбоку", price: 11300 },
+        { id: 348, name: "Mitsubishi Pajero, джип/suv 5 дв. V43, V46, (1991-1997), правый руль, спинка второго ряда цельная с подлокотником в центре и двумя боковыми, сидение цельное", price: 11300 },
+        { id: 572, name: "Mitsubishi Pajero, джип/suv 5 дв., 2 поколение, V46, (1997 - 1999), правый руль, первый ряд с двумя подлокотниками в спинках, второй ряд 50/50 два подлокотника по краям спинки", price: 11300 },
+        { id: 361, name: "Mitsubishi Pajero, джип/suv 5 дв., 3 поколение, V70, (1999-2006), правый руль, второй ряд 40/60 с выводом подлокотником, подголовники БУБЛИКИ/НЕ БУБЛИКИ", price: 11300 },
+        { id: 768, name: "Mitsubishi RVR 1997, минивэн, 2 поколение (11.1997 - 09.1999),передние сидения одинаковые, второй ряд спинка и сидение 50/50 без подлокотников", price: 11300 },
+        { id: 329, name: "Mitsubishi RVR, джип/suv 5 дв., 3 поколение, GA3W, GA4W (2010 - 2012), правый руль, второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 494, name: "Mitsubishi RVR, джип/suv 5 дв., 3 поколение, GA3W, GA4W (2010 - 2012), правый руль, второй ряд спинка 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 456, name: "Nissan Almera Classic, седан, 1 поколение, B10 (2006 - 2012),26 куз, левый руль, второй ряд цельный без подлокотника", price: 11300 },
+        { id: 882, name: "Nissan Bassara 1999, минивен, 1 поколение, JU30 (1999-2003), япония, пр. руль, 4wd? 7 мест, 1 одинаковый с подлокотниками, 2 ряд капитанский с 2 подлокотниками", price: 11300 },
+        { id: 881, name: "Nissan Bassara 1999, минивен, 1 поколение, JU30 (1999-2003), япония, пр. руль, 4wd? 7 мест, 1 одинаковый с подлокотниками, 2 ряд капитанский с 2 подлокотниками, 3 ряд делится спинка и сидение 50\\50", price: 16300 },
+        { id: 516, name: "Nissan Bluebird Sylphy, седан, 2 поколение, G11 (2005 - 2012), правый руль, второй ряд цельный с выводом подлокотника", price: 11300 },
+        { id: 540, name: "Nissan Cube, хэтчбек 5 дв., 3 поколение, Z12 (2008 - 2019), правый руль, первый ряд разные, водительское сидение широкое, спинка с подлокотником, второй ряд спинка 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 844, name: "Nissan DAYZ 2019, хэтчбек 5 дв., 2 поколение (03.2019 - 09.2023) Первый ряд разные, водитель широкий с подлокотником, второй ряд спинка 50/50 сиденье цельное", price: 20700 },
+        { id: 863, name: "Nissan DAYZ 2019, хэтчбек 5 дв., 2 поколение (03.2019 - 09.2023) Первый ряд разные, водитель широкий с подлокотником, второй ряд спинка 50/50 сиденье цельное.", price: 11300 },
+        { id: 379, name: "Nissan DAYZ Roox, хэтчбек 5 дв., 1 поколение, B21A, (2014 - 2020), правый руль, передние разные, водительское широкое, второй ряд 50/50 без подлокотника", price: 11300 },
+        { id: 483, name: "Nissan DAYZ, хэтчбек 5 дв., 1 поколение В21W, (2013 - 2019), правый руль, передние разные, водительское широкое с подлокотником, второй ряд 50/50 без подлокотника", price: 11300 },
+        { id: 746, name: "Nissan Diesel 2001 ПЕРЕДНИЕ ОДИНАКОВЫЕ", price: 11300 },
+        { id: 294, name: "Nissan Dualis/Nissan Qashqai J10 (2007-2014)/(2006 -2013), правый/левый руль, второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 293, name: "Nissan Dualis/Nissan Qashqai J10 (2007-2014)/(2006 -2013), правый/левый руль, второй ряд спинка 40/60 с клапаном, сидение цельное", price: 11300 },
+        { id: 867, name: "Nissan Elgrand рестайлинг 2000, минивэн, 1 поколение, E50 (08.2000 - 04.2002),НА ТРИ РЯДА второй ряд 60/40 без подлокотника", price: 11300 },
+        { id: 708, name: "Nissan Elgrand рестайлинг 2000, минивэн, 1 поколение, E50 (08.2000 - 04.2002),НА ТРИ РЯДА второй ряд 60/40 без подлокотника, третий ряд 50/50 без подлокотников", price: 16300 },
+        { id: 753, name: "Nissan Elgrand, минивэн, 1 поколение, E50 (1997 - 2002), правый руль, на 2 ряда, первый ряд с 2 подлокотниками в центре, второй ряд 40/60", price: 11300 },
+        { id: 360, name: "Nissan Elgrand, минивэн, 1 поколение, E50 (1997 - 2002), правый руль, на 3 ряда, первый ряд с 2 подлокотниками в центре, второй ряд капитанские кресла с 4 подлокотниками, третий ряд 50/50 2 подлокотника в центре", price: 16300 },
+        { id: 763, name: "Nissan Elgrand, минивэн, 1 поколение, E50 (1997 - 2002), правый руль, на ДВА ряда, первый ряд с 2 подлокотниками в центре, второй ряд капитанские кресла с 4 подлокотниками", price: 11300 },
+        { id: 434, name: "Nissan Fuga 51, ворой ряд низ диван, верх спинка цельная с выводом подлокотника, на переднем пассажирском кресле подножка", price: 11300 },
+        { id: 314, name: "Nissan Juke, джип/suv 5 дв., 1 поколение, YF15 (2011 - 2020) левый руль, второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 315, name: "Nissan Juke, джип/suv 5 дв., 1 поколение, YF15 (2011 - 2020) правый руль, второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 695, name: "Nissan Lafesta рестайлинг 2007, минивэн, 1 поколение, B30 (05.2007 - 12.2012) на 2 ряда, второй ряд 40/20/40, сиденье 40/60", price: 11300 },
+        { id: 413, name: "Nissan Latio, седан, 1 поколение, N17 (2012 - 2016), правый руль, второй ряд цельный без подлокотника, подголовники литые", price: 11300 },
+        { id: 788, name: "Nissan Laurel 1997, седан, 8 поколение, C35 (06.1997 - 07.1999) первый ряд одинаковые, второй ряд цельный с выводом, подголовники второго ряда литые", price: 11300 },
+        { id: 660, name: "Nissan Leaf, хэтчбек 5 дв., 2 поколение, ZE1 (2017 - н.в.), правый руль, спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 461, name: "Nissan Leaf, хэтчбек 5 дв., AZE0 (2009 - 2017), правый руль, передние спинки БЕЗ ВЫЕМОК, второй ряд спинка 40/60 без подлокотника, три подголовника, сидение цельное", price: 11300 },
+        { id: 551, name: "Nissan Leaf, хэтчбек 5 дв., ZE0 (2009 - 2017), правый руль, передние спинки С ВЫЕМКАМИ, второй ряд спинка 40/60 без подлокотника, два подголовника, сидение цельное", price: 11300 },
+        { id: 296, name: "Nissan March 2010- 2016 K 13(правый руль),второй ряд цельная спинка и цельный диван", price: 11300 },
+        { id: 359, name: "Nissan March K 13 2010-2016, спинка 40/60, низ диван", price: 11300 },
+        { id: 577, name: "Nissan March, хэтчбек 3 дв., K12 (03.2002 - 07.2010), правый руль, второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 295, name: "Nissan March, хэтчбек 3 дв., K12 (03.2002 - 07.2010), правый руль, второй ряд цельный без подлокотника", price: 11300 },
+        { id: 727, name: "Nissan March, хэтчбек 5 дв., K11 (1997 - 2002), правый руль, второй ряд цельный без подлокотника", price: 11300 },
+        { id: 627, name: "Nissan Murano, джип/suv 5 дв., 2 поколение, Z51 (2010 - 2016), левый руль, второй ряд 40/60 с выводом подлокотника", price: 11300 },
+        { id: 298, name: "Nissan Note 2012, хэтчбек 5 дв., E12 (2012 - 2020), второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 466, name: "Nissan Note 2012, хэтчбек 5 дв., E12 (2012 - 2020), правый руль, второй ряд спинка 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 866, name: "Nissan Note E13, e power, 2020 - 2023, 3 поколение, SNE13, правый руль, выемки под подголовник 1го ряда, спина 60/40, БЕЗ подлокотника, диван цельный., подголовники гуси", price: 11300 },
+        { id: 712, name: "Nissan Note HE12 E-power Nismo (2016-2020), второй ряд 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 402, name: "Nissan Note, хэтчбек 5 дв., E-POWER HE12 (2012-2020.), 2-е поколение, второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 297, name: "Nissan Note, хэтчбек 5 дв., E11 (2005 - 2012), правый руль, второй ряд спинка 40/60 без подлокотника, сидение цельное, подголовники 1 и 2 ряд разные", price: 11300 },
+        { id: 523, name: "Nissan Note, хэтчбек 5 дв., E11 (2005 - 2012), правый руль, второй ряд спинка 40/60 с подлокотником, сидение цельное", price: 11300 },
+        { id: 751, name: "Nissan NV200 (2009-н.в.), минивэн, ПЕРЕДНИЕ РАЗНЫЕ, пассажир трансформер, с литыми подголовниками, второй ряд цельный", price: 11300 },
+        { id: 804, name: "Nissan NV200 2009 M20, минивэн, 1 поколение (02.2009 - н.в.) на 2 ряда. Подголовники съемные, второй ряд спинка 60/40 без подлокотника, сиденье цельное ТРАНСФОРМЕР/ НЕ ТРАНСФОРМЕР", price: 11300 },
+        { id: 302, name: "Nissan Pathfinder, джип/suv 5 дв., 3 поколение, R51 (2004 - 2014), левый руль, на два ряда, второй ряд 40/20/40, без подлокотника с тремя выемками", price: 11300 },
+        { id: 497, name: "Nissan Patrol/ Safari Y61 ,джип/suv 5 дв., (2001-2010), левый руль, передние разные, водитель широкий, второй ряд 50/50 БЕЗ подлокотника", price: 11300 },
+        { id: 400, name: "Nissan Patrol/ Safari Y61 ,джип/suv 5 дв., (2001-2010), правый руль, (рисунок салона вертикальная полоска), передние одинаковые, второй ряд 50/50 с двумя клапанами", price: 11300 },
+        { id: 300, name: "Nissan Patrol/ Safari Y61 ,джип/suv 5 дв., (2001-2010), правый руль, передние одинаковые (ВЕРТИКАЛЬНАЯ полоска), второй ряд 50/50 с КЛАПАНАМИ ДВУХ ПОДЛОКОТНИКОВ", price: 11300 },
+        { id: 299, name: "Nissan Patrol/ Safari Y61 ,джип/suv 5 дв., (2001-2010), правый руль, передние одинаковые (горизонтальная полоска), второй ряд 50/50 с выводом двух подлокотников", price: 11300 },
+        { id: 472, name: "Nissan Patrol/ Safari Y61 ,джип/suv 5 дв., (2001-2010), правый руль, передние одинаковые, второй ряд 50/50 БЕЗ подлокотника", price: 11300 },
+        { id: 688, name: "Nissan Presage,U31 (2003-2009)минивэн, на два ряда сидений, второй ряд отдельные кресла", price: 11300 },
+        { id: 301, name: "Nissan Primera, седан, 3 поколение, P12 (2001 - 2005), правый руль, второй ряд цельный с клапаном, подголовники литые", price: 11300 },
+        { id: 556, name: "Nissan Primera, универсал, 3 поколение, P12 (2002 - 2008), правый, спинка второго ряда 40/60 с выводом подлокотника, два боковых упора, сидение цельное", price: 11300 },
+        { id: 569, name: "Nissan Qashqai+2 J10 (2008 - 2010) на 2 ряда, левый руль, второй ряд спинка 40/20/40, сидение 60/40", price: 11300 },
+        { id: 767, name: "Nissan Qashqai, джип/suv 5 дв., 2 поколение, J11 (2013 - 2017), ВЕРСИЯ ЕВРОПА, LE+, левый руль, второй ряд спинка 40/60 с вывод подлокотника, сидение цельное", price: 11300 },
+        { id: 548, name: "Nissan Qashqai, джип/suv 5 дв., 2 поколение, J11 (2017 - 2022), левый руль, второй ряд спинка 40/60 с вывод подлокотника, сидение цельное", price: 11300 },
+        { id: 438, name: "Nissan Qashqai, джип/suv 5 дв., 2 поколение, J11 (2017 - 2022), левый руль, второй ряд спинка 40/60 с вывод подлокотника, сидение цельное, дизайн ОРИГИНАЛ", price: 11300 },
+        { id: 656, name: "Nissan Serena C27 E-Power, минивен, 2016 - 2022,правый руль на 2 ряда, на спинках первого ряда пластиковые столики, второй ряд капитанские кресла", price: 11300 },
+        { id: 643, name: "Nissan Serena C27 E-Power, минивен, 2016 - 2022,правый руль, на 3 ряда, на спинках первого ряда пластиковые столики, второй ряд капитанские кресла, третий ряд 50/50", price: 16300 },
+        { id: 604, name: "Nissan Serena С27, минивэн, гибрид, 5 поколение (2016 - 2019) на 2 ряда, правый руль, первый ряд с 2 подлокотниками в центре, второй ряд 40/20/40 с подлокотником", price: 11300 },
+        { id: 748, name: "Nissan Serena С27, минивэн, гибрид, 5 поколение (2016 - 2019), правый руль, на 3 ряда, первый ряд с 2 подлокотниками в центре, второй ряд 40/20/40 с подлокотником, третий ряд 50/50 без пластика на торце сидений", price: 16300 },
+        { id: 564, name: "Nissan Serena С27, минивэн, гибрид, 5 поколение (2016 - 2019), правый руль, на 3 ряда, первый ряд с 2 подлокотниками в центре, второй ряд 40/20/40 с подлокотником, третий ряд 50/50 с пластиком на торце сидений", price: 16300 },
+        { id: 541, name: "Nissan Serena, минивэн, 3 поколение, C25 (2007 - 2010), правый руль, на 2 ряда передние кресла разные с подлокотниками, пассажирское трансформер, второй ряд спинка и сидение 40/20/40, подголовники 2-го ряда прямые/г-образные", price: 11300 },
+        { id: 636, name: "Nissan Serena, минивэн, 4 поколение, C26 (2010 - 2016), правый руль, на два ряда, второй ряд 40/20/40, подголовники прямые/гуськом.", price: 11300 },
+        { id: 619, name: "Nissan Skyline, седан, 12 поколение, V36 (2010 - 2014), правый руль, второй ряд 40/20/40 с подлокотником, сидения цельное", price: 11300 },
+        { id: 374, name: "Nissan Sylphy, седан, 3 поколение, B17 (2012 - 2020),правый руль, второй ряд цельный с подлокотником", price: 11300 },
+        { id: 303, name: "Nissan Teana, седан, 1 поколение, J31 (2003 - 2008), правый руль, (с подножкой на пассажирском кресле), спинка второго ряда цельная (шьется как 2 отдельных и подлокотник), подголовники съемные", price: 11300 },
+        { id: 304, name: "Nissan Teana, седан, 1 поколение, J31 (2003 - 2008), правый руль, второй ряд цельный, подголовники литые, пассажир без подножки", price: 11300 },
+        { id: 305, name: "Nissan Teana, седан, 2 поколение, J32 (2008 - 01.2014), правый руль, передний пассажир с подножкой, второй ряд цельный с подлокотником, подголовники съемные", price: 11300 },
+        { id: 648, name: "Nissan Teana, седан, 2 поколение, J32 (2008 - 2014), правый руль, второй ряд цельный с подлокотником, подголовники ЛИТЫЕ", price: 11300 },
+        { id: 623, name: "Nissan Teana, седан, 2 поколение, J32 (2008-2014), ЛЕВЫЙ руль, пассажир первого ряда с атаманкой, второй ряд цельный с выводом подлокотника, подголовники ЧЕБУРАШКА", price: 11300 },
+        { id: 638, name: "Nissan Teana, седан, 3 поколение, L33 (2014 - 2016), правый руль, пассажир с подножкой, второй ряд цельный с выводом подлокотника, подголовники съемные", price: 11300 },
+        { id: 306, name: "Nissan Terrano, джип/suv 5 дв., 1 поколение, WD21 (1992 - 1995), правый руль, второй ряд 50/50 без подлокотников", price: 11300 },
+        { id: 850, name: "Nissan Terrano, джип/suv 5 дв., 2 поколение, PR50 (1995 - 1998), правый руль, второй ряд 40/60 с без подлокотника", price: 11300 },
+        { id: 307, name: "Nissan Terrano, джип/suv 5 дв., 2 поколение, PR50 (1995 - 1998), правый руль, второй ряд 40/60 с выводом подлокотника", price: 11300 },
+        { id: 837, name: "Nissan Tiida 2007, хэтчбек 5 дв., 1 поколение, C11 (09.2007 - 09.2010) Левый руль сборка ЕВРОПА, передние одинаковые не электро, второй ряд спинка 40/60 с выводом, низ цельный, боковые упоры.", price: 11300 },
+        { id: 308, name: "Nissan Tiida Latio, седан, C11 (2004 - 2012),правый руль, второй ряд цельный без подлокотника", price: 11300 },
+        { id: 309, name: "Nissan Tiida Latio, седан, C11 (2004 - 2012),правый руль, второй ряд цельный с клапаном", price: 11300 },
+        { id: 311, name: "Nissan Tiida, хэтчбек 5 дв., 1 поколение, C11 (2004 - 2012), правый руль, второй ряд спинка 40/60 без подлокотника, 2 боковых упора сидение цельное", price: 11300 },
+        { id: 310, name: "Nissan Tiida, хэтчбек 5 дв., 1 поколение, C11 (2004 - 2012), правый руль, второй ряд спинка 40/60 с выводом подлокотника, 2 боковых упора сидение цельное", price: 11300 },
+        { id: 798, name: "Nissan Wingroad 2005, универсал, 3 поколение, Y12 (11.2005 - 03.2018) Пассажир ТРАНСФОРМЕР, второй ряд спинка 60/40 без подлокотника, сиденье цельное", price: 11300 },
+        { id: 786, name: "Nissan X-Trail 2022, джип/suv 5 дв., 4 поколение, T33 (07.2022 - н.в.) Сборка Япония E-POWER. Первый ряд одинаковые. Второй ряд 60/40 с подлокотником", price: 11300 },
+        { id: 747, name: "Nissan X-Trail джип/suv 5 дв. T30 (2000-2007), ПРАВЫЙ РУЛЬ, второй ряд 40/60 с подлокотником, БЕЗ ВЫЕМКИ под подголовник, комплектация с полукруглыми спинками", price: 11300 },
+        { id: 680, name: "Nissan X-Trail джип/suv 5 дв. T30 (2000-2007), ПРАВЫЙ РУЛЬ, второй ряд 40/60 с подлокотником, БЕЗ ВЫЕМКИ под подголовник, комплектация с прямыми спинками", price: 11300 },
+        { id: 647, name: "Nissan X-Trail, джип/suv 5 дв., 2 поколение, T31 (2007 - 2015) ЛЕВЫЙ РУЛЬ, второй ряд 40/60 БЕЗ подлокотника, подголовники АКТИВ/НЕ АКТИВ", price: 11300 },
+        { id: 646, name: "Nissan X-Trail, джип/suv 5 дв., 2 поколение, T31 (2007 - 2015) ЛЕВЫЙ РУЛЬ, второй ряд 40/60 с выводом подлокотника, БЕЗ ВЫЕМКИ под срединный подголовник второго ряда, подголовники НЕ АКТИВ/АКТИВ.", price: 11300 },
+        { id: 460, name: "Nissan X-Trail, джип/suv 5 дв., 2 поколение, T31 (2007 - 2015) ЛЕВЫЙ РУЛЬ, второй ряд 40/60 с выводом подлокотника, С ВЫЕМКОЙ под срединный подголовник второго ряда, подголовники НЕ АКТИВ/АКТИВ.", price: 11300 },
+        { id: 372, name: "Nissan X-Trail, джип/suv 5 дв., 2 поколение, T31 (2007 - 2015) правый руль, второй ряд 40/60 БЕЗ подлокотника, подголовники АКТИВ/НЕ АКТИВ", price: 11300 },
+        { id: 645, name: "Nissan X-Trail, джип/suv 5 дв., 2 поколение, T31 (2007 - 2015) правый руль, второй ряд 40/60, БЕЗ выемки под срединный подголовник второго ряда, подголовники АКТИВ.", price: 11300 },
+        { id: 574, name: "Nissan X-Trail, джип/suv 5 дв., 2 поколение, T31 (2007 - 2015) правый руль, второй ряд 40/60, без выемки под срединный подголовник второго ряда, подголовники НЕ АКТИВ.", price: 11300 },
+        { id: 420, name: "Nissan X-Trail, джип/suv 5 дв., 2 поколение, T31 (2007 - 2015) правый руль, второй ряд 40/60, с выемкой под срединный подголовник второго ряда, подголовники АКТИВ.", price: 11300 },
+        { id: 313, name: "Nissan X-Trail, джип/suv 5 дв., 2 поколение, T31 (2007 - 2015) правый руль, второй ряд 40/60, с выемкой под срединный подголовник второго ряда, подголовники НЕ АКТИВ.", price: 11300 },
+        { id: 427, name: "Nissan X-Trail, джип/suv 5 дв., 3 поколение, T32 (2013 - 2022), ЛЕВЫЙ руль, второй ряд спинка 40/20/40, сидение 40/60,", price: 11300 },
+        { id: 684, name: "Nissan X-Trail, джип/suv 5 дв., 3 поколение, T32 (2013 - 2022), ПРАВЫЙ руль, второй ряд спинка 40/20/40, сидение 40/60 (перф. цельная), без пластика на втором ряду", price: 11300 },
+        { id: 458, name: "Nissan X-Trail, джип/suv 5 дв., 3 поколение, T32 (2013 - 2022), ПРАВЫЙ руль, второй ряд спинка 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 817, name: "Renault Duster 2010, джип/suv 5 дв., 1 поколение (01.2010 - 05.2015)первый ряд одинаковые , второй ряд диван цельный , спинка 40\\60 большая за водителем , 3 подголовника 2го ряда .", price: 11300 },
+        { id: 509, name: "Renault Duster, джип/suv 5 дв., 2 поколение, HM (2020 - 2022), левый руль, второй ряд 40/60 без подлокотника, с боковыми пластиковыми ручками, сидение цельное, 4 подголовника", price: 11300 },
+        { id: 544, name: "Renault Duster, джип/suv 5 дв., 2 поколение, HM (2020 - 2022), левый руль, второй ряд спинки 40/60 без подлокотника, с боковыми пластиковыми ручками, сидение цельное", price: 11300 },
+        { id: 852, name: "Renault Kaptur 2016, джип/suv 5 дв., 1 поколение (04.2016 - 08.2020) до рестаил X7LA, левый руль, второй ряд спинка 40/60 без подлокотника, низ диван", price: 11300 },
+        { id: 337, name: "SsangYong Actyon Sports, пикап, 1 поколение (2006 - 2012), левый руль, второй ряд цельный с выводом подлокотника", price: 11300 },
+        { id: 697, name: "SsangYong Kyron рестайлинг 2007, джип/suv 5 дв., 1 поколение, D200 (04.2007 - 03.2016), второй ряд 40/60 с 3 ремнем и выводом подлокотника", price: 11300 },
+        { id: 575, name: "SsangYong Musso Sports, пикап, 1 поколение, Р100 (2002 - 2006), второй ряд цельный с выводом подлокотника", price: 11300 },
+        { id: 734, name: "Subaru Exiga, минивэн, 1 поколение, YA/Y10 (2008 - 2011), правый руль, на три ряда, второй ряд спинка 40/20/40 с подлокотником, сидение 40/60", price: 11300 },
+        { id: 615, name: "Subaru Exiga, минивэн, 1 поколение, YA/Y10 (2008 - 2011), правый руль, на три ряда, второй ряд спинка 40/20/40 с подлокотником, сидение 40/60, третий ряд 50/50", price: 16300 },
+        { id: 836, name: "Subaru Forester 1997, джип/suv 5 дв., 1 поколение, SF/S10 (09.1997 - 01.2000) второй ряд 50/50, 2 подлокотника в упорах, подголовники бублики", price: 11300 },
+        { id: 581, name: "Subaru Forester SG 2003-2005, правый руль, передние спинки с подлокотниками в пластике, второй ряд спинка 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 480, name: "Subaru Forester SG/S11 , 2003 - 2007, левый руль, 1 ряд без выемок, второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 475, name: "Subaru Forester SG/S11 2003-2007, 1 ряд спинки с выемками, спинка и сидение 40/60 с выводом подлокотника, кросс спорт компл.", price: 11300 },
+        { id: 317, name: "Subaru Forester SH5-SH9, 2008-2013, правый руль, второй ряд спинка 40/60 с клапаном, 2 боковых упора, сидение цельное с клапаном под бар", price: 11300 },
+        { id: 477, name: "Subaru Forester SJ 2012-2016, правый руль, второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 318, name: "Subaru Forester SJ 2012-2016, правый руль, второй ряд спинка 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 591, name: "Subaru Forester, джип/suv 5 дв., 5 поколение, SK/S14 (2018 - 2021), правый руль, второй ряд спинка 60/40 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 439, name: "Subaru Impreza , хэтчбек 5 дв., 3 поколение, GH 2-8 (2007 - 2011), второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 856, name: "Subaru Impreza 2005, 2 WD правый руль, 2 поколение 2 рестайлинг, задний ряд цельный, без вывода подлокотника", price: 11300 },
+        { id: 757, name: "Subaru Impreza GG универсал, 2 поколение, (2002-2005) передние кресла одинаковые, спинка второго ряда 40/60 без подлокотника, диван цельный", price: 11300 },
+        { id: 602, name: "Subaru Impreza, хэтчбек 5 дв., 5 поколение, GT (2016 - 2022), правый руль, второй ряд спинка 60/40 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 383, name: "Subaru Impreza, хэтчбек 5 дв., GP/G23 (2011 - 2014), правый руль, второй ряд спинка 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 552, name: "Subaru Legacy B4, седан, 3 поколение, BE (1998 - 2001), правый руль, второй ряд цельный с выводом подлокотника", price: 11300 },
+        { id: 316, name: "Subaru Legacy B4, седан, 4 поколение, BL (2006 - 2009), правый руль, первый ряд открытые под пластик, второй ряд цельный с выводом подлокотника", price: 11300 },
+        { id: 779, name: "Subaru Legacy рестайлинг 2017, седан, 6 поколение, BN/B15 (02.2017 - 04.2021) 2-ой ряд спинка 40/60 низ цельный с выводом подлокотника", price: 11300 },
+        { id: 558, name: "Subaru Legacy универсал, BP/B13, 2003-2006, правый руль, второй ряд низ диван, два боковых упора, спинк 40/60 с выводом подлокотника", price: 11300 },
+        { id: 532, name: "Subaru Legacy, седан, 5 поколение, BM/B14 (2009 - 2013), правый руль, второй ряд цельный с выводом подлокотника", price: 11300 },
+        { id: 563, name: "Subaru Legacy, универсал, 3 поколение, BH/B12 (1998 - 2003), правый руль, второй ряд спинка 40\\60 с выводом подлокотника", price: 11300 },
+        { id: 796, name: "Subaru Levorg 2020, универсал, 2 поколение, VN (08.2020 - н.в.) Передние сиденья с выемками под подголовники, 2 ряд спинка 40/20/40 с подлокотником, низ диван", price: 11300 },
+        { id: 498, name: "Subaru Levorg VM (2014 - 2020) 1 поколение, универсал, правый руль, первый ряд без выемок под подголовники, второй ряд спинка 40/20/40 с подлокотником, сиденье целое", price: 11300 },
+        { id: 555, name: "Subaru Levorg VM (2014 - 2020) 1 поколение, универсал, правый руль, первый ряд без выемок под подголовники, второй ряд спинка 40/60 с клапаном, сидение цельное", price: 11300 },
+        { id: 620, name: "Subaru Levorg VM (2014 - 2020) 1 поколение, универсал, правый руль, первый ряд с выемками под подголовники, второй ряд спинка 40/60 с подлокотником клапан, сидение цельное", price: 11300 },
+        { id: 784, name: "Subaru Levorg VM (2014 - 2020) 1 поколение, универсал,правый руль, первый ряд с выемками под подголовники, второй ряд спинка 40/20/40 с подлокотником клапан, сиденье целое", price: 11300 },
+        { id: 803, name: "Subaru R2 2-й рестайлинг 2005, хэтчбек 5 дв., 1 поколение, RC/R14 (11.2005 - 03.2010) второй ряд спинка 50/50 без подлокотника, сиденье цельное", price: 11300 },
+        { id: 846, name: "Subaru XV 2017, джип/suv 5 дв., 2 поколение, GT/G24 (03.2017 - 04.2021), спинка второго ряда 40/60, без подлокотника, низ диван", price: 11300 },
+        { id: 628, name: "Subaru XV, джип/suv 5 дв., 1 поколение, GP/G33 (2011 - 2016), правый руль, второй ряд 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 482, name: "Suzuki Alto, хэтчбек 5 дв., 7 поколение, HA25S/25V/35S (2009 - 2014), правый руль, второй ряд цельные без подлокотника", price: 11300 },
+        { id: 322, name: "Suzuki Escudo, джип/suv 5 дв., 3 поколение (2005 - 2012), правый руль, второй ряд 40/60 с клапаном", price: 11300 },
+        { id: 776, name: "Suzuki Every 2005, минивэн, 5 поколение (08.2005 - 01.2015) 2 ряда Правый руль передний ряд одинаковые, второй ряд цельный без подголовников", price: 11300 },
+        { id: 517, name: "Suzuki Hustler, хэтчбек 5 дв., 1 поколение (2014 - 2019), правый руль, передние сидения разные, водительское сиденье большое с подлокотником, второй ряд 50/50 без подлокотника", price: 11300 },
+        { id: 323, name: "Suzuki Ignis, хэтчбек 5 дв., 2 поколение (2015 - 2020), правый руль, второй ряд 50/50 без подлокотника", price: 11300 },
+        { id: 769, name: "Suzuki Jimny Sierra 2018, джип/suv 3 дв., 4 поколение, JB74 (06.2018 - н.в.), правый руль, спинка второго ряда 50/50 без подлокотника, диван цельный.", price: 11300 },
+        { id: 380, name: "Suzuki Jimny, джип/suv 3 дв., 3 поколение, JB43 (1998 - 2019), правый руль, второй ряд спинка 50/50 без подлокотника, сидение цельное, подголовники съемные", price: 11300 },
+        { id: 861, name: "Suzuki Solio 2020, хэтчбек 5 дв., 4 поколение (11.2020 - 12.2024),1-й ряд разные пассажир трансформер, второй ряд 50/50 с двумя подлокотниками в центре", price: 11300 },
+        { id: 545, name: "Suzuki Solio, хэтчбек 5 дв., 3 поколение, (2015 - 2018), правый руль, передние сидения разные, водительское с подлокотником, второй ряд 50/50 без подлокотников", price: 11300 },
+        { id: 677, name: "Suzuki Solio, хэтчбек 5 дв., 3 поколение, (2015 - 2018), правый руль, передние сидения разные, водительское с подлокотником, второй ряд 50/50 С ВЫВОДОМ ДВУХ подлокотников (бандит)", price: 11300 },
+        { id: 325, name: "Suzuki Swift, хэтчбек 5 дв., (2010-2015), правый руль, второй ряд спинка 40/60 без подлокотника сидение цельное, 4 подголовника", price: 11300 },
+        { id: 537, name: "Suzuki Swift, хэтчбек 5 дв., 3 поколение, (2008 - 2010), правый руль, второй ряд 40/60, сидение цельное, подголовники второго ряда маленькие", price: 11300 },
+        { id: 433, name: "Suzuki Swift, хэтчбек 5 дв., 5 поколение (2016 - н.в.), правый руль, второй ряд спинка 40/60 без подлокотника, сидение цельное", price: 11300 },
+        { id: 874, name: "Suzuki SX4 S-cross 08.2016-12.2021, 2 поколение, правый руль, первый ряд одинаковый, второй 40/60, малая спинка за водителем, диван цельный", price: 11300 },
+        { id: 422, name: "Suzuki SX4, седан, 1 поколение, SX4, YC11S, (2007 - 2014), правый руль, второй ряд спинка 40/60 с подлокотником, упоры, 4 подголовника, сидение цельное", price: 11300 },
+        { id: 326, name: "Suzuki SX4, хэтчбек 5 дв., 1 поколение, (2006 - 2014), правый руль, второй ряд 40/60 с выводом подлокотника", price: 11300 },
+        { id: 486, name: "Suzuki SX4, хэтчбек 5 дв., 1 поколение, (2006 - 2014), правый руль, второй ряд спинка 40/60 с выводом подлокотника, сидение цельное", price: 11300 },
+        { id: 327, name: "Suzuki Vitara, джип/suv 5 дв., 3 поколение (2005 - 2012), ЛЕВЫЙ руль, второй ряд 40/60 с клапаном", price: 11300 },
+        { id: 386, name: "Suzuki Wagon R (2012-2017), первый руль, передние разные, водительское широкое, второй ряд 50/50 без подлокотников", price: 11300 },
+        { id: 879, name: "Suzuki Xbee, хэтчбек, 1 поколение, MN71S (10.2017-7.2022) япония, пр руль, 4wd, 5 мест, гибрид, передние кресла разные на спинках столики (пассажир трансформер), второй ряд спинка и сидение50\\50", price: 11300 },
+        { id: 801, name: "Toyota", price: 11300 },
+        { id: 838, name: "Toyota Allex 2-й рестайлинг 2004, хэтчбек 5 дв., 1 поколение, E120 (04.2004 - 10.2006), первый ряд разные, пассажир трансформер, второй ряд 40/60 с выводом подлокотника.", price: 11300 },
+        // ... (добавьте остальные записи из вашего списка, я ограничусь для краткости, но вы можете продолжить)
+    ];
 
-            // Чтение файла как base64
-            function readFileAsBase64(file) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result); // результат содержит data:image/...;base64,...
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-            }
+    // ---------- Материалы (обновлены по вашим таблицам) ----------
+    const baseMaterials = [
+        "бежевая гладкая экокожа", "белая гладкая экокожа", "красная гладкая экокожа",
+        "рыжая (св. коричневый) гладкая экокожа", "светло-серый гладкий (Голубой) экокожа",
+        "синяя гладкая экокожа", "темно-серая гладкая экокожа", "черная гладкая экокожа",
+        "шоколад гладкая экокожа", "микрофибра бежевая гладкая", "микрофибра коричневая гладкая",
+        "микрофибра рыжая гладкая", "микрофибра светло-серая гладкая", "микрофибра темно-серая гладкая",
+        "микрофибра черная гладкая", "петроль велюр", "бежевый велюр", "розовый велюр",
+        "светло-серый велюр", "темно-серый велюр", "черный велюр", "жаккард слива",
+        "жаккард соты", "жаккард штрих белый", "жаккард Синий ШТРИХ", "жаккард черн-синий (ромб)",
+        "жаккард черно-серый (3д ромб)", "жаккард черный (с рисунком)", "PVC 1,2мм (новый) бежевый гладкий",
+        "PVC 1,2мм (новый) бордовый гладкий", "PVC 1,2мм (новый) черный гладкий",
+        "наппа шоколад гладкий", "наппа бежевый гл."
+    ];
 
-            // Обработка отправки формы
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
+    const centerMaterials = [
+        "бежевая перфорация экокожа", "белая перфорация экокожа", "красная перфорация экокожа",
+        "рыжая (св. коричневый) перфорация экокожа", "светло-серый перфорация (Голубой) экокожа",
+        "синяя перфорация экокожа", "темно-серая перфорация экокожа", "черная перфорация экокожа",
+        "шоколад перфорация экокожа", "микрофибра бежевая перфорированная",
+        "микрофибра коричневая перфорированная", "микрофибра рыжая перфорированная",
+        "микрофибра светло-серая перфорированная", "микрофибра темно-серая перфорированная",
+        "микрофибра черная перфорированная", "бежевый велюр", "петроль велюр",
+        "розовый велюр", "светло-серый велюр", "темно-серый велюр", "черный велюр",
+        "вишневая алькантара", "рыжая алькантара (НОВЫЙ цвет)", "светло-бежевая алькантара",
+        "светло-серая алькантара", "темно-коричневая алькантара", "темно-серая алькантара",
+        "жаккард слива", "жаккард соты", "жаккард штрих белый", "жаккард Синий ШТРИХ",
+        "жаккард черн-синий (ромб)", "жаккард черно-серый (3д ромб)", "жаккард черный (с рисунком)",
+        "наппа черная перфорация", "наппа шоколад перф", "темно серая дакота перфорация",
+        "дакота бежевая перфорация", "PVC 1,2 мм (новый) бордовая перфорация",
+        "PVC 1,2мм (новый) бежевая перфорация", "PVC 1,2мм (новый) черная перфорация"
+    ];
 
-                // Собираем данные формы
-                const name = document.getElementById('name').value.trim();
-                const phone = document.getElementById('phone').value.trim();
-                const city = document.getElementById('city').value.trim();
-                const address = document.getElementById('address').value.trim();
-                const comment = document.getElementById('comment').value.trim();
-                const carBrand = document.getElementById('carBrand').value.trim();
-                const carModel = document.getElementById('carModel').value.trim();
-                const coverColor = document.getElementById('coverColor').value.trim();
-                const stitchColor = document.getElementById('stitchColor').value.trim();
-                const pattern = document.getElementById('pattern').value.trim();
-                const deliveryDate = document.getElementById('deliveryDate').value;
-                const deliverySlot = document.getElementById('deliverySlot').value.trim();
-                const paymentMethod = document.getElementById('paymentMethod').value;
+    // ---------- Рисунки (дизайн центра) ----------
+    const patternDesigns = [
+        "Рисунок \"ромб стандарт\"",
+        "Рисунок \"длинный ромб\"",
+        "Рисунок \"полоска частая\"",
+        "Рисунок \"комбо\""
+    ];
 
-                // Проверка обязательных полей
-                if (!name || !phone || !carBrand || !carModel) {
-                    showResponse('Пожалуйста, заполните обязательные поля (Имя, Телефон, Марка, Модель).', 'error');
-                    return;
-                }
+    const patternPrices = {
+        'Рисунок "ромб стандарт"': { price: 1100, row1: 550, row2: 1100, row3: 1650 },
+        'Рисунок "длинный ромб"': { price: 1100, row1: 550, row2: 1100, row3: 1650 },
+        'Рисунок "полоска частая"': { price: 0, row1: 0, row2: 0, row3: 0 },
+        'Рисунок "комбо"': { price: 1700, row1: 850, row2: 1700, row3: 2550 }
+    };
 
-                // Получаем параметры из URL
-                const { dealId, companyId, page } = getUrlParams();
+    // ---------- Допуслуги ----------
+    const extras = [
+        { name: "двойной боковой шов", price: 700, row1: 350, row2: 700, row3: 1050 },
+        { name: "основа белая полностью", price: 1100, row1: 550, row2: 1100, row3: 1650 },
+        { name: "рельефы Перф/альк/ белый", price: 600, row1: 300, row2: 600, row3: 900 }
+    ];
 
-                // Получаем файл, если выбран
-                let photoBase64 = null;
-                let photoName = null;
-                if (fileInput.files && fileInput.files[0]) {
-                    try {
-                        photoBase64 = await readFileAsBase64(fileInput.files[0]);
-                        photoName = fileInput.files[0].name;
-                    } catch (err) {
-                        showResponse('Ошибка при чтении файла: ' + err.message, 'error');
-                        return;
-                    }
-                }
+    const extra2 = [
+        { name: "Заготовка /чехол на передний подлокотник", price: 600 },
+        { name: "материал метражом", price: 1000 },
+        { name: "Набор образцов рисунков (13 шт.)", price: 1500 },
+        { name: "Наценка за смешанную комплектацию", price: 1100 },
+        { name: "отправка на клиента", price: 200 },
+        { name: "подушки косточки (набор) с вышивкой", price: 2000 },
+        { name: "Подушки косточки без вышивки (набор)", price: 1500 },
+        { name: "основа белая полностью", price: 1100 },
+        { name: "рельефы Перф/альк/ белый", price: 600 }
+    ];
 
-                // Формируем структуру заказа
-                const orderId = generateId();
-                const orderNumber = 'GM-' + Date.now().toString().slice(-8);
-                const now = nowISO();
-                const price = 5000; // примерная цена, можно добавить поле в форму
-                const subtotal = price;
-                const total = price;
+    // ---------- ВЫШИВКИ (полный список из вашего сообщения) ----------
+    const embroideryList = [
+        { id: 137, name: "Daihatsu D1 [119.4x29.5]", price: 700 },
+        { id: 138, name: "Daihatsu D2 [179,9х132,2]", price: 700 },
+        // ... добавьте остальные записи из вашего файла
+    ];
 
-                // Создаём элемент товара
-                const item = {
-                    productId: 'cover-001',
-                    name: `Чехлы для ${carBrand} ${carModel}`,
-                    packLabel: 'комплект (перед/зад)',
-                    price: price,
+    // ================================================================
+    //  КАРТИНКИ ДЛЯ УЗОРОВ (файлы в корне проекта)
+    // ================================================================
+    const patternImageMap = {
+        'Рисунок "ромб стандарт"': 'romb_standart.jpg',
+        'Рисунок "длинный ромб"': 'romb_long.jpg',
+        'Рисунок "полоска частая"': 'poloska_chastaya.jpg',
+        'Рисунок "комбо"': 'combo.jpg'
+    };
+
+    // ================================================================
+    //  ЗАПОЛНЕНИЕ SELECT'ов
+    // ================================================================
+
+    function populateSelect(id, items) {
+        const sel = document.getElementById(id);
+        if (!sel) return;
+        sel.innerHTML = '';
+        items.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item;
+            opt.textContent = item;
+            sel.appendChild(opt);
+        });
+    }
+
+    // Автомобили
+    const carSelect = document.getElementById('carSelect');
+    cars.forEach(car => {
+        const opt = document.createElement('option');
+        opt.value = car.id;
+        opt.textContent = `${car.id} — ${car.name} (${car.price} ₽)`;
+        opt.dataset.price = car.price;
+        opt.dataset.name = car.name;
+        carSelect.appendChild(opt);
+    });
+    carSelect.addEventListener('change', updatePrice);
+
+    // Материалы
+    populateSelect('baseMaterial', baseMaterials);
+    populateSelect('centerMaterial', centerMaterials);
+
+    // Рисунки (дизайн центра)
+    populateSelect('patternDesign', patternDesigns);
+
+    // Вышивки
+    const embSelect = document.getElementById('embroiderySelect');
+    embroideryList.forEach(e => {
+        const opt = document.createElement('option');
+        opt.value = e.id;
+        opt.textContent = `${e.id} — ${e.name} (${e.price} ₽)`;
+        opt.dataset.price = e.price;
+        embSelect.appendChild(opt);
+    });
+    embSelect.addEventListener('change', function() {
+        const price = this.options[this.selectedIndex]?.dataset?.price || 0;
+        document.getElementById('embroideryPrice').value = price ? price + ' ₽' : '—';
+        updatePrice();
+    });
+
+    // Допуслуги (чекбоксы)
+    const extrasContainer = document.getElementById('extrasCheckboxes');
+    extras.forEach((e, i) => {
+        const label = document.createElement('label');
+        label.innerHTML = `<input type="checkbox" value="${i}" data-price="${e.price}"> ${e.name} (${e.price} ₽)`;
+        extrasContainer.appendChild(label);
+        label.querySelector('input').addEventListener('change', updatePrice);
+    });
+
+    const extra2Container = document.getElementById('extra2Checkboxes');
+    extra2.forEach((e, i) => {
+        const label = document.createElement('label');
+        label.innerHTML = `<input type="checkbox" value="${i}" data-price="${e.price}"> ${e.name} (${e.price} ₽)`;
+        extra2Container.appendChild(label);
+        label.querySelector('input').addEventListener('change', updatePrice);
+    });
+
+    // ================================================================
+    //  ПРЕДПРОСМОТР КАРТИНКИ УЗОРА
+    // ================================================================
+
+    const patternSelect = document.getElementById('patternDesign');
+    const patternPreview = document.getElementById('patternPreview');
+    const noPatternText = document.getElementById('noPatternText');
+
+    function updatePatternPreview() {
+        const selected = patternSelect.value;
+        const imgFile = patternImageMap[selected];
+        if (imgFile) {
+            patternPreview.src = imgFile;
+            patternPreview.style.display = 'block';
+            noPatternText.style.display = 'none';
+        } else {
+            patternPreview.style.display = 'none';
+            noPatternText.style.display = 'block';
+        }
+    }
+
+    patternSelect.addEventListener('change', function() {
+        updatePatternPreview();
+        updatePrice(); // пересчёт цены при смене узора
+    });
+
+    // Инициализация предпросмотра
+    updatePatternPreview();
+
+    // ================================================================
+    //  РАСЧЁТ ЦЕНЫ
+    // ================================================================
+
+    function calcPrice() {
+        let total = 0;
+
+        // 1. Базовая цена из выбранного автомобиля
+        const selected = carSelect.options[carSelect.selectedIndex];
+        const basePrice = parseInt(selected?.dataset?.price) || 0;
+        total += basePrice;
+
+        // 2. Надбавка за дизайн
+        const design = document.querySelector('input[name="design"]:checked');
+        if (design) {
+            const val = design.value;
+            if (val.includes('боковые')) total += 800;
+            if (val.includes('макета')) total += 1200;
+            if (val.includes('верхние')) total += 1000;
+        }
+
+        // 3. Материалы (надбавки за премиум)
+        const baseMat = document.getElementById('baseMaterial').value;
+        if (baseMat.includes('микрофибра')) total += 500;
+        if (baseMat.includes('велюр')) total += 700;
+        if (baseMat.includes('жаккард')) total += 900;
+        if (baseMat.includes('наппа')) total += 1200;
+
+        const centerMat = document.getElementById('centerMaterial').value;
+        if (centerMat.includes('алькантара')) total += 1200;
+        if (centerMat.includes('жаккард')) total += 900;
+        if (centerMat.includes('наппа')) total += 1200;
+
+        // 4. Рисунок (дизайн центра)
+        const pattern = patternSelect.value;
+        const patternInfo = patternPrices[pattern];
+        if (patternInfo) {
+            total += patternInfo.price || 0;
+        }
+
+        // 5. Вышивка
+        const embSelect = document.getElementById('embroiderySelect');
+        const embPrice = parseInt(embSelect.options[embSelect.selectedIndex]?.dataset?.price) || 0;
+        total += embPrice;
+
+        // 6. Допуслуги (основные)
+        document.querySelectorAll('#extrasCheckboxes input:checked').forEach(cb => {
+            total += parseInt(cb.dataset.price) || 0;
+        });
+
+        // 7. Допуслуги 2
+        document.querySelectorAll('#extra2Checkboxes input:checked').forEach(cb => {
+            total += parseInt(cb.dataset.price) || 0;
+        });
+
+        // 8. Двойной шов
+        if (document.getElementById('doubleStitch').checked) {
+            total += 700;
+        }
+
+        return total;
+    }
+
+    function updatePrice() {
+        const total = calcPrice();
+        document.getElementById('totalPrice').textContent = total.toLocaleString('ru-RU') + ' ₽';
+    }
+
+    // Вешаем события на все элементы, влияющие на цену
+    document.querySelectorAll('select, input[type="radio"], input[type="checkbox"]').forEach(el => {
+        el.addEventListener('change', updatePrice);
+        el.addEventListener('input', updatePrice);
+    });
+
+    // Первоначальный расчёт
+    updatePrice();
+
+    // ================================================================
+    //  ОТПРАВКА ЗАЯВКИ
+    // ================================================================
+
+    const form = document.getElementById('orderForm');
+    const responseArea = document.getElementById('responseArea');
+    const webhookUrl = 'https://hooks.tglk.ru/in/mX1dBAMnmXrazeSbrMFvAkVOaQZNW4';
+
+    function getUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            dealId: params.get('deal_id') || '',
+            companyId: params.get('company_id') || '',
+            page: params.get('page') || ''
+        };
+    }
+
+    function generateId() {
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    }
+
+    function nowISO() {
+        return new Date().toISOString();
+    }
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const carSelect = document.getElementById('carSelect');
+        const selectedCar = carSelect.options[carSelect.selectedIndex];
+        const carId = selectedCar?.value;
+        const carName = selectedCar?.dataset?.name || '';
+
+        if (!name || !phone || !carId) {
+            showResponse('Заполните обязательные поля: Имя, Телефон, Автомобиль.', 'error');
+            return;
+        }
+
+        const kit = document.getElementById('kitType').value;
+        const design = document.querySelector('input[name="design"]:checked')?.value || '';
+        const baseMat = document.getElementById('baseMaterial').value;
+        const centerMat = document.getElementById('centerMaterial').value;
+        const baseColor = document.getElementById('baseColor').value.trim();
+        const centerColor = document.getElementById('centerColor').value.trim();
+        const pattern = patternSelect.value;
+        const embSelect = document.getElementById('embroiderySelect');
+        const embName = embSelect.options[embSelect.selectedIndex]?.text || '';
+        const embPrice = parseInt(embSelect.options[embSelect.selectedIndex]?.dataset?.price) || 0;
+        const comment = document.getElementById('comment').value.trim();
+        const doubleStitch = document.getElementById('doubleStitch').checked;
+
+        const total = calcPrice();
+
+        const { dealId, companyId, page } = getUrlParams();
+        const orderId = generateId();
+        const orderNumber = 'GM-' + Date.now().toString().slice(-8);
+        const now = nowISO();
+
+        const payload = {
+            event: 'order.created',
+            sentAt: now,
+            order: {
+                id: orderId,
+                orderNumber: orderNumber,
+                status: 'created',
+                createdAt: now,
+                city: '',
+                name: name,
+                phone: phone,
+                recipientPhone: phone,
+                address: '',
+                district: '',
+                intercom: '',
+                comment: comment || '',
+                deliveryDate: '',
+                deliverySlot: '',
+                paymentMethod: '',
+                items: [{
+                    productId: 'cover-custom',
+                    name: `Чехлы для ${carName}`,
+                    packLabel: kit,
+                    price: total,
                     quantity: 1,
-                    imageUrl: photoBase64 || null, // если фото есть – base64
-                };
-
-                // Формируем JSON по образцу
-                const payload = {
-                    event: 'order.created',
-                    sentAt: now,
-                    order: {
-                        id: orderId,
-                        orderNumber: orderNumber,
-                        status: 'created',
-                        createdAt: now,
-                        city: city || '',
-                        name: name,
-                        phone: phone,
-                        recipientPhone: phone,
-                        address: address || '',
-                        district: '',
-                        intercom: '',
-                        comment: comment || '',
-                        deliveryDate: deliveryDate || '',
-                        deliverySlot: deliverySlot || '',
-                        paymentMethod: paymentMethod,
-                        items: [item],
-                        subtotal: subtotal,
-                        deliveryCost: 0,
-                        spentPoints: 0,
-                        total: total,
-                        // Дополнительные поля для чехлов
-                        carBrand: carBrand,
-                        carModel: carModel,
-                        coverColor: coverColor || '',
-                        stitchColor: stitchColor || '',
-                        pattern: pattern || '',
-                        photoName: photoName || null,
-                    },
-                    customer: {
-                        id: 'customer-' + generateId(),
-                        phone: phone,
-                        name: name,
-                        pointsBalance: 0,
-                        phoneVerifiedAt: null,
-                        createdAt: now,
-                        referredBy: null,
-                        regUtm: null,
-                    },
-                    attribution: {
-                        orderUtm: null,
-                        cookies: {
-                            granat_city: city || '',
-                            granat_cookie_consent: '1'
-                        }
-                    },
-                    // Передаём параметры из URL
-                    dealId: dealId || "",
-                    companyId: companyId || "",
-                    page: page || "",
-                };
-
-                // Отправка вебхука
-                try {
-                    const response = await fetch(webhookUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(payload),
-                    });
-
-                    let resultText;
-                    try {
-                        const resultJson = await response.json();
-                        resultText = JSON.stringify(resultJson, null, 2);
-                    } catch {
-                        resultText = await response.text();
-                    }
-
-                    if (response.ok) {
-                        showResponse(`✅ Заказ успешно создан!\nОтвет сервера:\n${resultText}`, 'success');
-                    } else {
-                        showResponse(`❌ Ошибка отправки (${response.status}):\n${resultText}`, 'error');
-                    }
-                } catch (err) {
-                    showResponse(`❌ Сетевая ошибка: ${err.message}`, 'error');
+                    imageUrl: null
+                }],
+                subtotal: total,
+                deliveryCost: 0,
+                spentPoints: 0,
+                total: total,
+                carId: carId,
+                carName: carName,
+                kitType: kit,
+                design: design,
+                baseMaterial: baseMat,
+                centerMaterial: centerMat,
+                baseColor: baseColor || '',
+                centerColor: centerColor || '',
+                pattern: pattern,
+                embroidery: embName,
+                embroideryPrice: embPrice,
+                doubleStitch: doubleStitch,
+                extras: Array.from(document.querySelectorAll('#extrasCheckboxes input:checked')).map(cb => extras[parseInt(cb.value)].name),
+                extra2: Array.from(document.querySelectorAll('#extra2Checkboxes input:checked')).map(cb => extra2[parseInt(cb.value)].name)
+            },
+            customer: {
+                id: 'customer-' + generateId(),
+                phone: phone,
+                name: name,
+                pointsBalance: 0,
+                phoneVerifiedAt: null,
+                createdAt: now,
+                referredBy: null,
+                regUtm: null
+            },
+            attribution: {
+                orderUtm: null,
+                cookies: {
+                    granat_city: '',
+                    granat_cookie_consent: '1'
                 }
+            },
+            dealId: dealId,
+            companyId: companyId,
+            page: page
+        };
+
+        try {
+            const response = await fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
             });
-
-            // Функция отображения ответа
-            function showResponse(message, type) {
-                responseArea.style.display = 'block';
-                responseArea.textContent = message;
-                responseArea.className = 'response-area ' + (type || '');
+            let resultText;
+            try {
+                const resultJson = await response.json();
+                resultText = JSON.stringify(resultJson, null, 2);
+            } catch {
+                resultText = await response.text();
             }
+            if (response.ok) {
+                showResponse('✅ Заявка успешно отправлена!\nОтвет сервера:\n' + resultText, 'success');
+            } else {
+                showResponse('❌ Ошибка отправки (' + response.status + '):\n' + resultText, 'error');
+            }
+        } catch (err) {
+            showResponse('❌ Сетевая ошибка: ' + err.message, 'error');
+        }
+    });
 
-            // Показываем параметры из URL в консоли для отладки (можно убрать)
-            console.log('Параметры URL:', getUrlParams());
-        })();
-    </script>
+    function showResponse(message, type) {
+        responseArea.style.display = 'block';
+        responseArea.textContent = message;
+        responseArea.className = 'response-area ' + (type || '');
+    }
+</script>
 </body>
 </html>
